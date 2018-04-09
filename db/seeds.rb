@@ -28,7 +28,8 @@ ingredient = Ingredient.find_or_create_by_upc('049200042014')
 ingredient.update(name: "Sugar: Granulated")
 
 ingredient = Ingredient.find_or_create_by_upc('815652001141')
-# ingredient.update(name: "Egg: Whole", density: 1.035)
+ingredient.update(name: "Egg: Whole")
+# density: 1.035
 
 ingredient = Ingredient.find_or_create_by_upc('071012010509')
 ingredient.update(name: "Flour: All-Purpose")
@@ -43,7 +44,65 @@ ingredient = Ingredient.find_or_create_by_upc('024600010849')
 ingredient.update(name: "Salt: Table")
 
 ingredient = Ingredient.find_or_create_by_upc('747599622137')
-# ingredient.update(name: "Chocolate: Semisweet", density: 0.8128899183390536)
+ingredient.update(name: "Chocolate: Semisweet")
+# density: 0.8128899183390536
 
 ingredient = Ingredient.find_or_create_by_upc('093966005851')
-# ingredient.update(name: "Milk: Whole", density: 1.0310022372748548)
+ingredient.update(name: "Milk: Whole")
+# density: 1.0310022372748548
+
+#recipes
+Recipe.destroy_all
+recipe = Recipe.new(name: "Whopper Cookie")
+
+recipe.ingredient_amounts.build(
+  amount: 50,
+  unit: Unit.find_by(name: "gram"),
+  ingredient: Ingredient.find_by(name: "Butter: Unsalted")
+)
+recipe.ingredient_amounts.build(
+  amount: 20,
+  unit: Unit.find_by(name: "gram"),
+  ingredient: Ingredient.find_by(name: "Sugar: Light Brown")
+)
+recipe.ingredient_amounts.build(
+  amount: 10,
+  unit: Unit.find_by(name: "gram"),
+  ingredient: Ingredient.find_by(name: "Sugar: Granulated")
+)
+recipe.ingredient_amounts.build(
+  amount: 20,
+  unit: Unit.find_by(name: "gram"),
+  ingredient: Ingredient.find_by(name: "Egg: Whole")
+)
+recipe.ingredient_amounts.build(
+  amount: 40,
+  unit: Unit.find_by(name: "gram"),
+  ingredient: Ingredient.find_by(name: "Flour: All-Purpose")
+)
+recipe.ingredient_amounts.build(
+  amount: 0.5,
+  unit: Unit.find_by(name: "gram"),
+  ingredient: Ingredient.find_by(name: "Flour: Corn")
+)
+recipe.ingredient_amounts.build(
+  amount: 0.75,
+  unit: Unit.find_by(name: "gram"),
+  ingredient: Ingredient.find_by(name: "Baking Soda")
+)
+recipe.ingredient_amounts.build(
+  amount: 0.5,
+  unit: Unit.find_by(name: "gram"),
+  ingredient: Ingredient.find_by(name: "Salt: Table")
+)
+recipe.ingredient_amounts.build(
+  amount: 20,
+  unit: Unit.find_by(name: "gram"),
+  ingredient: Ingredient.find_by(name: "Chocolate: Semisweet")
+)
+recipe.ingredient_amounts.build(
+  amount: 1,
+  unit: Unit.find_by(name: "cup"),
+  ingredient: Ingredient.find_by(name: "Milk: Whole")
+)
+recipe.save
