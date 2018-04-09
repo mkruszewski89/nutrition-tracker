@@ -1,4 +1,6 @@
 class Ingredient < ApplicationRecord
+  has_many :ingredient_amounts
+  has_many :recipes, through: :ingredient_amounts
 
   def self.find_or_create_by_upc(upc)
     if self.find_by(upc: upc)
