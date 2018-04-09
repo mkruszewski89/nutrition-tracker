@@ -15,3 +15,35 @@ Unit.create(physical_property: 'mass', lowest_unit: 'gram', lowest_unit_equivale
 Unit.create(physical_property: 'mass', lowest_unit: 'gram', lowest_unit_equivalence: 28.34950, name: 'ounce', abbreviation: 'oz')
 Unit.create(physical_property: 'mass', lowest_unit: 'gram', lowest_unit_equivalence: 453.5920, name: 'pound', abbreviation: 'lb')
 Unit.create(physical_property: 'mass', lowest_unit: 'gram', lowest_unit_equivalence: 1000.000, name: 'kilogram', abbreviation: 'kg')
+
+#ingredients
+Ingredient.destroy_all
+ingredient = Ingredient.find_or_create_by_upc('077901421425')
+ingredient.update(name: "Butter: Unsalted")
+
+ingredient = Ingredient.find_or_create_by_upc('049200056752')
+ingredient.update(name: "Sugar: Light Brown")
+
+ingredient = Ingredient.find_or_create_by_upc('049200042014')
+ingredient.update(name: "Sugar: Granulated")
+
+ingredient = Ingredient.find_or_create_by_upc('815652001141')
+# ingredient.update(name: "Egg: Whole", density: 1.035)
+
+ingredient = Ingredient.find_or_create_by_upc('071012010509')
+ingredient.update(name: "Flour: All-Purpose")
+
+ingredient = Ingredient.find_or_create_by_upc('761720071045')
+ingredient.update(name: "Flour: Corn")
+
+ingredient = Ingredient.find_or_create_by_upc('099482427931')
+ingredient.update(name: "Baking Soda")
+
+ingredient = Ingredient.find_or_create_by_upc('024600010849')
+ingredient.update(name: "Salt: Table")
+
+ingredient = Ingredient.find_or_create_by_upc('747599622137')
+# ingredient.update(name: "Chocolate: Semisweet", density: 0.8128899183390536)
+
+ingredient = Ingredient.find_or_create_by_upc('093966005851')
+# ingredient.update(name: "Milk: Whole", density: 1.0310022372748548)

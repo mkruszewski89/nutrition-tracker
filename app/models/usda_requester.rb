@@ -27,7 +27,7 @@ class UsdaRequester
   def initialize(upc)
     @data = ""
     @data_to_assign = ""
-    ndbno = upc.length == 12 ? get_ndbno(upc) : ""
+    ndbno = get_ndbno(upc)
     if ndbno != ""
       get_data(ndbno)
       @data_to_assign = {ndbno: ndbno, upc: upc}
@@ -51,6 +51,7 @@ class UsdaRequester
     get_usda_unit
     get_name
     get_nutrients
+    get_density
   end
 
   def get_usda_unit
@@ -73,6 +74,29 @@ class UsdaRequester
     nutrient_per_usda_unit = "#{NUTRIENT_NAMES[nutrient['name']]}_per_usda_unit".to_sym
     data_to_assign[:nutrients][nutrient_unit] = nutrient['unit']
     data_to_assign[:nutrients][nutrient_per_usda_unit] = nutrient['value'].to_f/100
+  end
+
+  def get_density
+    serving = get_data_for_density(data['nutrients'][0]['measures'][0], 'label', 'qty')
+    equivalent = get_data_for_density(data['nutrients'][0]['measures'][0], 'eunit', 'eqv')
+    if serving.values.any?{|v| v==""} || equivalent.values.any?{|v| v==""} || serving[:unit].physical_property == equivalent[:unit].physical_property
+      data_to_assign[:name] = "#{data_to_assign[:name]}&D"
+    else
+      data_to_assign[:density] = calculate_density(serving, equivalent)
+    end
+  end
+
+  def get_data_for_density(usda_source, unit, quantity)
+    quantity = usda_source[quantity]
+    unit = Unit.find_by(name: usda_source[unit]) ? Unit.find_by(name: usda_source[unit]) : Unit.find_by(abbreviation: usda_source[unit])
+    quantity = "" if quantity == nil
+    unit = "" if unit == nil
+    {quantity: quantity, unit: unit}
+  end
+
+  def calculate_density(serving, equivalent)
+    ratio = (serving[:quantity] * serving[:unit].lowest_unit_equivalence) / (equivalent[:quantity] * equivalent[:unit].lowest_unit_equivalence)
+    density = serving[:unit].physical_property == 'mass' ? ratio : 1/ratio
   end
 
 end
