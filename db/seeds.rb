@@ -1,7 +1,17 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+#units
+Unit.destroy_all
+Unit.create(physical_property: 'volume', lowest_unit: 'milliliter', lowest_unit_equivalence: 1.000000, name: 'milliliter', abbreviation: 'ml')
+Unit.create(physical_property: 'volume', lowest_unit: 'milliliter', lowest_unit_equivalence: 4.928920, name: 'teaspoon', abbreviation: 'tsp')
+Unit.create(physical_property: 'volume', lowest_unit: 'milliliter', lowest_unit_equivalence: 14.78680, name: 'tablespoon', abbreviation: 'Tbsp')
+Unit.create(physical_property: 'volume', lowest_unit: 'milliliter', lowest_unit_equivalence: 29.57350, name: 'fluid ounce', abbreviation: 'fl oz')
+Unit.create(physical_property: 'volume', lowest_unit: 'milliliter', lowest_unit_equivalence: 236.5880, name: 'cup', abbreviation: 'c')
+Unit.create(physical_property: 'volume', lowest_unit: 'milliliter', lowest_unit_equivalence: 473.1760, name: 'pint', abbreviation: 'pt')
+Unit.create(physical_property: 'volume', lowest_unit: 'milliliter', lowest_unit_equivalence: 946.3530, name: 'quart', abbreviation: 'qt')
+Unit.create(physical_property: 'volume', lowest_unit: 'milliliter', lowest_unit_equivalence: 1000.000, name: 'liter', abbreviation: 'l')
+Unit.create(physical_property: 'volume', lowest_unit: 'milliliter', lowest_unit_equivalence: 3785.410, name: 'gallon', abbreviation: 'gal')
+Unit.create(physical_property: 'mass', lowest_unit: 'gram', lowest_unit_equivalence: 0.000001, name: 'microgram', abbreviation: 'µg')
+Unit.create(physical_property: 'mass', lowest_unit: 'gram', lowest_unit_equivalence: 0.001000, name: 'milligram', abbreviation: 'mg')
+Unit.create(physical_property: 'mass', lowest_unit: 'gram', lowest_unit_equivalence: 1.000000, name: 'gram', abbreviation: 'g')
+Unit.create(physical_property: 'mass', lowest_unit: 'gram', lowest_unit_equivalence: 28.34950, name: 'ounce', abbreviation: 'oz')
+Unit.create(physical_property: 'mass', lowest_unit: 'gram', lowest_unit_equivalence: 453.5920, name: 'pound', abbreviation: 'lb')
+Unit.create(physical_property: 'mass', lowest_unit: 'gram', lowest_unit_equivalence: 1000.000, name: 'kilogram', abbreviation: 'kg')
