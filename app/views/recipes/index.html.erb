@@ -1,0 +1,16 @@
+<h1>Recipes</h1>
+
+<table>
+  <tr>
+    <th>Recipe</th>
+  </tr>
+
+  <% @recipes.each do |recipe| %>
+  <tr>
+    <td>
+      <%= render(partial: 'application/model_show_link',
+        locals: {model: recipe}) %>
+    </td>
+  </tr>
+  <% end %>
+</table>

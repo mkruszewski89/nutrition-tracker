@@ -29,7 +29,7 @@ ingredient.update(name: "Sugar: Granulated")
 
 ingredient = Ingredient.find_or_create_by_upc('815652001141')
 ingredient.update(name: "Egg: Whole")
-# density: 1.035)
+# , density: 1.035)
 
 ingredient = Ingredient.find_or_create_by_upc('071012010509')
 ingredient.update(name: "Flour: All-Purpose")
@@ -45,11 +45,11 @@ ingredient.update(name: "Salt: Table")
 
 ingredient = Ingredient.find_or_create_by_upc('747599622137')
 ingredient.update(name: "Chocolate: Semisweet")
-# density: 0.8128899183390536)
+# , density: 0.8128899183390536)
 
 ingredient = Ingredient.find_or_create_by_upc('093966005851')
 ingredient.update(name: "Milk: Whole")
-# density: 1.0310022372748548)
+# , density: 1.0310022372748548)
 
 #recipes
 Recipe.destroy_all
