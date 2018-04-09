@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180409173146) do
+ActiveRecord::Schema.define(version: 20180409182349) do
 
   create_table "ingredients", force: :cascade do |t|
     t.string "name", default: ""
@@ -50,6 +50,16 @@ ActiveRecord::Schema.define(version: 20180409173146) do
     t.string "calcium_unit", default: ""
     t.float "iron_per_usda_unit", default: 0.0
     t.string "iron_unit", default: ""
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "units", force: :cascade do |t|
+    t.string "name", default: ""
+    t.string "lowest_unit", default: ""
+    t.float "lowest_unit_equivalence", default: 0.0
+    t.string "abbreviation", default: ""
+    t.string "physical_property", default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
