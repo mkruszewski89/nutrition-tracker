@@ -1,0 +1,3 @@
+class IngredientAmount < ApplicationRecord
+
+end
