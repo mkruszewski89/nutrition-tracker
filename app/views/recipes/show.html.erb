@@ -1,1 +1,14 @@
-<%= @recipe.name %>
+<h1><%= @recipe.name %></h1>
+
+<h3>What You'll Need</h3>
+
+  <% headers = ["Amount", "Unit", "Ingredients"] %>
+  <% data = []
+  @recipe.ingredient_amounts.each do |ingredient_amount|
+    data << ["raw", ingredient_amount.amount]
+    data << ["raw", ingredient_amount.unit.name]
+    data << ["raw", ingredient_amount.ingredient.name]
+    data << ["new_row"] unless ingredient_amount == @recipe.ingredient_amounts.last
+  end %>
+  <%= render(partial: 'application/table_view_generator/table_generator',
+  locals: {headers: headers, data: data}) %>

@@ -1,0 +1,11 @@
+<table>
+  <tr>
+    <%= render(partial: 'application/table_view_generator/headers_generator',
+      collection: headers, as: :header) %>
+  </tr>
+
+  <tr>
+    <%= render(partial: 'application/table_view_generator/data_generator',
+      collection: data, as: :datum) %>
+  </tr>
+</table>

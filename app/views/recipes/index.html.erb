@@ -1,16 +1,10 @@
 <h1>Recipes</h1>
 
-<table>
-  <tr>
-    <th>Recipe</th>
-  </tr>
-
-  <% @recipes.each do |recipe| %>
-  <tr>
-    <td>
-      <%= render(partial: 'application/model_show_link',
-        locals: {model: recipe}) %>
-    </td>
-  </tr>
-  <% end %>
-</table>
+<% headers = ["Recipe"] %>
+<% data = []
+@recipes.each do |recipe|
+  data << ["link", recipe.name, "recipes/#{recipe.id}"]
+  data << ["new_row"] unless recipe == @recipes.last
+end %>
+<%= render(partial: 'application/table_view_generator/table_generator',
+locals: {headers: headers, data: data}) %>

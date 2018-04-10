@@ -1,3 +1,5 @@
+IngredientAmount.destroy_all
+
 #units
 Unit.destroy_all
 Unit.create(physical_property: 'volume', lowest_unit: 'milliliter', lowest_unit_equivalence: 1.000000, name: 'milliliter', abbreviation: 'ml')

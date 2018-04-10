@@ -4,23 +4,36 @@ class UsdaRequester
   attr_reader :data, :data_to_assign
 
   NUTRIENT_NAMES = {
+    "Cholesterol" => :cholesterol,
     "Energy" => :calorie,
     "Protein" => :protein,
     "Carbohydrate, by difference" => :carbohydrate,
+    "Fiber, total dietary" => :fiber,
     "Sugars, total" => :sugar,
     "Total lipid (fat)" => :fat_total,
     "Fatty acids, total saturated" => :fat_saturated,
-    "Fatty acids, total monounsaturated" => :fat_monounsaturated,
-    "Fatty acids, total polyunsaturated" => :fat_polyunsaturated,
-    "Fatty acids, total trans" => :fat_trans,
-    "Fiber, total dietary" => :fiber,
-    "Cholesterol" => :cholesterol,
-    "Sodium, Na" => :sodium,
-    "Vitamin A, RAE" => :vitamin_a,
-    "Vitamin C, total ascorbic acid" => :vitamin_c,
     "Calcium, Ca" => :calcium,
     "Iron, Fe" => :iron,
-  }
+    "Magnesium, Mg" => :magnesium,
+    "Phosphorus, P" => :phosphorus,
+    "Potassium, K" => :potassium,
+    "Sodium, Na" => :sodium,
+    "Zinc, Zn" => :zinc,
+    "Copper, Cu" => :copper,
+    "Manganese, Mn" => :manganese,
+    "Selenium, Se" => :selenium,
+    "Vitamin A, RAE" => :vitamin_a,
+    "Vitamin E (alpha-tocopherol)" => :vitamin_e,
+    "Vitamin C, total ascorbic acid" => :vitamin_c,
+    "Thiamin" => :thiamin,
+    "Riboflavin" => :riboflavin,
+    "Niacin" => :niacin,
+    "Vitamin B-6" => :vitamin_b6,
+    "Vitamin B-12" => :vitamin_b12,
+    "Choline, total" => :choline,
+    "Vitamin K (phylloquinone)" => :vitamin_k,
+    "Folate, total" => :folate
+   }
 
   API_KEY = 'fbfxvslLNzeppsSuq8yZsp4Bcyc3aUHFrI1RcLAf'
 

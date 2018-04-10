@@ -22,3 +22,5 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+https://health.gov/dietaryguidelines/2015/guidelines/appendix-7/

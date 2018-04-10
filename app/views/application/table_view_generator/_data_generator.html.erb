@@ -1,0 +1,8 @@
+<% case datum[0] %>
+<% when "raw" %>
+  <td><%= datum[1] %></td>
+<% when "link" %>
+  <td><%= link_to(datum[1], datum[2]) %></td>
+<% when "new_row" %>
+  </tr><tr>
+<% end %>
