@@ -1,6 +1,9 @@
 class Recipe < ApplicationRecord
-  has_many :ingredient_amounts
-  has_many :ingredients, through: :ingredient_amounts
+  has_many :recipe_ingredients
+  has_many :ingredients, through: :recipe_ingredients
+  has_many :recipe_nutrients
+  has_many :nutrients, through: :recipe_nutrients
+  belongs_to :user
 
   def populate_nutrition
     nutrition_columns = self.class.get_nutrition_columns
