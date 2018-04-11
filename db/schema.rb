@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180410200001) do
+ActiveRecord::Schema.define(version: 20180411032249) do
 
   create_table "ingredient_nutrients", force: :cascade do |t|
     t.integer "ingredient_id"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20180410200001) do
     t.string "storage_unit", default: ""
     t.float "density", default: 0.0
     t.string "upc", default: ""
-    t.string "nbdno", default: ""
+    t.string "ndbno", default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20180410200001) do
     t.integer "recipe_id"
     t.integer "nutrient_id"
     t.float "nutrient_amount", default: 0.0
-    t.string "nutritient_storage_unit", default: ""
+    t.string "nutrient_storage_unit", default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -31,7 +31,7 @@ class UsdaRequester
   def get_data_to_assign
     get_name
     get_storage_unit
-    get_nutrients_per_usda_unit
+    get_nutrients_per_storage_unit
     get_density
   end
 
@@ -46,7 +46,7 @@ class UsdaRequester
   def get_nutrients_per_storage_unit
     data_to_assign[:nutrients] = {}
     data['nutrients'].each {|attribute_hash|
-      data_to_assign[:nutrients][attribute_hash['name']] = {amount_per_storage_unit: attribute_hash['value'].to_f/100, storage_unit: attribute_hash['unit']}
+      data_to_assign[:nutrients][attribute_hash['nutrient_id']] = {nutrient_usda_name: attribute_hash['name'], nutrient_amount_per_ingredient_storage_unit: attribute_hash['value'].to_f/100, nutrient_storage_unit: attribute_hash['unit']}
     }
   end
 

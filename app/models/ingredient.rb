@@ -4,30 +4,43 @@ class Ingredient < ApplicationRecord
   has_many :ingredient_nutrients
   has_many :nutrients, through: :ingredient_nutrients
 
-  # def self.find_or_create_by_upc(upc)
-  #   if self.find_by(upc: upc)
-  #     self.find_by(upc: upc)
-  #   else
-  #     usda_request = UsdaRequester.new(upc)
-  #     usda_request.data != "" ? self.create_from_usda_data(usda_request.data_to_assign) : self.new(upc: upc)
-  #   end
-  # end
-  #
-  # def self.create_from_usda_data(data_to_assign)
-  #   ingredient = Ingredient.new
-  #   data_to_assign.each {|key, value|
-  #     ingredient[key] = value unless key == :nutrients
-  #   }
-  #   data_to_assign[:nutrients].each {|nutrient_usda_name, nutrient_values|
-  #     ingredient_nutrient = IngredientNutrients.new(
-  #       ingredient: ingredient
-  #       nutrient: Nutrient.find_by(usda_name: nutrient_usda_name)
-  #       unit: Unit.find_by(nutrient_values[unit]
-  #       amount_per_usda_unit: nutrient_values[amount_per_usda_unit]
-  #     )
-  #     ingredient_nutrient.save unless ingredient_nutrient.nutrient == nil || ingredient_nutrient.unit == nil
-  #   }
-  #   ingredient
-  # end
+  def self.find_or_create_by_upc(upc)
+    if self.find_by(upc: upc)
+      self.find_by(upc: upc)
+    else
+      usda_request = UsdaRequester.new(upc)
+      usda_request.data != "" ? self.create_from_usda_data(usda_request.data_to_assign) : self.new(upc: upc)
+    end
+  end
+
+  def self.create_from_usda_data(data)
+    ingredient = Ingredient.new
+    data.each {|key, value|
+      ingredient[key] = value unless key == :nutrients
+    }
+    ingredient.save
+    ingredient.build_ingredient_nutrients_from_usda_data(data[:nutrients], ingredient)
+    ingredient
+  end
+
+  def build_ingredient_nutrients_from_usda_data(data, ingredient)
+    data.each {|key, value|
+      if nutrient = Nutrient.find_by(usda_name: value[:nutrient_usda_name], storage_unit: value[:nutrient_storage_unit])
+        ingredient.ingredient_nutrients.build(
+          nutrient_amount_per_ingredient_storage_unit: value[:nutrient_amount_per_ingredient_storage_unit],
+          nutrient_storage_unit: value[:nutrient_storage_unit],
+          ingredient_storage_unit: ingredient.storage_unit,
+          nutrient: nutrient
+        )
+      end
+    }
+  end
 
 end
+
+# ingredient_nutrient = IngredientNutrient.new
+# ingredient_nutrient[:nutrient_amount_per_ingredient_storage_unit] = value[:nutrient_amount_per_ingredient_storage_unit]
+# ingredient_nutrient[:nutrient_storage_unit] = value[:nutrient_storage_unit]
+# ingredient_nutrient[:ingredient_storage_unit] = ingredient.storage_unit
+# ingredient.ingredient_nutrients << ingredient_nutrient
+# nutrient.ingredient_nutrients << ingredient_nutrient

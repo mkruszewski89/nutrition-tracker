@@ -6,34 +6,33 @@ class Recipe < ApplicationRecord
   belongs_to :user
 
   def populate_nutrition
-    nutrition_columns = self.class.get_nutrition_columns
-    nutrition_columns.each {|column| self[column.to_sym] = 0}
-    nutrition_columns.each {|column|
-      self.ingredient_amounts.each {|ingredient_amount|
-        nutrition_per_usda_unit = ingredient_amount.ingredient.send("#{column}_per_usda_unit")
-        ingredient_amount_in_usda_unit = convert_to_usda_unit(ingredient_amount)
-        self[column.to_sym] += nutrition_per_usda_unit * ingredient_amount_in_usda_unit
-        self["#{column}_unit".to_sym] = ingredient_amount.ingredient.send("#{column}_unit")
+    recipe_nutrients.destroy_all
+    recipe_ingredients.each {|recipe_ingredient|
+      recipe_ingredient.ingredient.ingredient_nutrients.each {|ingredient_nutrient|
+        recipe_ingredient_amount_in_ingredient_storage_unit = transform_amount_to_unit(recipe_ingredient, ingredient_nutrient)
+        recipe_ingredient_nutrient_amount = recipe_ingredient_amount_in_ingredient_storage_unit * ingredient_nutrient.nutrient_amount_per_ingredient_storage_unit
+        if recipe_nutrient = recipe_nutrients.find_by(recipe: self, nutrient: ingredient_nutrient.nutrient)
+          recipe_nutrient.nutrient_amount += recipe_ingredient_nutrient_amount
+        else
+          recipe_nutrient = recipe_nutrients.build(nutrient_amount: recipe_ingredient_nutrient_amount, nutrient_storage_unit: ingredient_nutrient.nutrient_storage_unit, nutrient: ingredient_nutrient.nutrient)
+        end
+        recipe_nutrient.save
       }
     }
-    self.save
   end
 
-  def self.get_nutrition_columns
-    column_names.collect {|column|
-      column unless column == 'id' || column == 'name' || column == 'user_id' || column == 'created_at' || column == 'updated_at' || column[-4..column.length] == 'unit'
-    }.compact
+  def transform_amount_to_unit(recipe_ingredient, nutrient)
+    old_amount = recipe_ingredient.ingredient_amount
+    old_unit = Unit.find_by(abbreviation: recipe_ingredient.ingredient_storage_unit)
+    new_unit = Unit.find_by(abbreviation: nutrient.ingredient_storage_unit)
+    old_amount_in_lowest_unit = old_amount * old_unit.lowest_unit_equivalence
+    old_amount_in_lowest_unit = transform_physical_property(old_amount_in_lowest_unit, old_unit, recipe_ingredient.ingredient.density) if old_unit.physical_property != new_unit.physical_property
+    new_amount = old_amount_in_lowest_unit / new_unit.lowest_unit_equivalence
   end
 
-  def convert_to_usda_unit(ingredient_amount)
-    usda_unit = Unit.find_by(abbreviation: ingredient_amount.ingredient.usda_unit)
-    ingredient_amount_in_lowest_unit = ingredient_amount.amount * ingredient_amount.unit.lowest_unit_equivalence
-    ingredient_amount_in_lowest_unit = convert_physical_property(ingredient_amount_in_lowest_unit, ingredient_amount) if ingredient_amount.unit.physical_property != usda_unit.physical_property
-    ingredient_amount_in_usda_unit = ingredient_amount_in_lowest_unit / usda_unit.lowest_unit_equivalence
+  def transform_physical_property(amount, unit, density)
+    unit.physical_property == 'mass' ? amount * (1/density) : amount * density
   end
 
-  def convert_physical_property(ingredient_amount_in_lowest_unit, ingredient_amount)
-    ingredient_amount.unit.physical_property == 'mass' ? ingredient_amount_in_lowest_unit * (1/ingredient_amount.ingredient.density) : ingredient_amount_in_lowest_unit * ingredient_amount.ingredient.density
-  end
 
 end
