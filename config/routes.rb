@@ -3,14 +3,14 @@ Rails.application.routes.draw do
 
   scope '/recipes' do
     get '/', to: 'recipes#index', as: 'recipes'
-    scope '/:id' do
-      get '/', to: 'recipes#show', as: 'recipe'
-    end
   end
 
   scope '/users' do
     scope '/:id' do
       get '/', to: 'users#show', as: 'user'
+      scope '/recipes' do
+        get '/:recipe_id', to: 'recipes#show', as: 'recipe'
+      end
     end
   end
 

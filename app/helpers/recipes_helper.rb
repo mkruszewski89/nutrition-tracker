@@ -28,7 +28,7 @@ module RecipesHelper
   def collect_recipe_and_user_links_for_table_display(recipes)
     data = []
     recipes.each {|recipe|
-      data << ["link", recipe.name, "recipes/#{recipe.id}"]
+      data << ["link", recipe.name, "users/#{recipe.user.id}/recipes/#{recipe.id}"]
       data << ["link", recipe.user.name, "users/#{recipe.user.id}"]
       data << ["new_row"] unless recipe == recipes.last
     }
