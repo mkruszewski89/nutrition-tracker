@@ -8,4 +8,10 @@ Rails.application.routes.draw do
     end
   end
 
+  scope '/users' do
+    scope '/:id' do
+      get '/', to: 'users#show', as: 'user'
+    end
+  end
+
 end

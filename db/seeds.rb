@@ -4,10 +4,6 @@ Nutrient.destroy_all
 Ingredient.destroy_all
 Recipe.destroy_all
 
-RecipeIngredient.destroy_all
-IngredientNutrient.destroy_all
-RecipeNutrient.destroy_all
-
 #users
 site_admin = User.create(name: "Site Administrator", email: "admin@nutritiontracker.com", password: 'p@ssw0rd', role: 1, birthday: '06/22/1989', gender: 'male')
 
@@ -99,8 +95,7 @@ ingredient = Ingredient.find_or_create_by_upc('049200042014')
 ingredient.update(name: "Sugar: Granulated")
 
 ingredient = Ingredient.find_or_create_by_upc('815652001141')
-ingredient.update(name: "Egg: Whole")
-# , density: 1.035)
+ingredient.update(name: "Egg: Whole", density: 1.035)
 
 ingredient = Ingredient.find_or_create_by_upc('071012010509')
 ingredient.update(name: "Flour: All-Purpose")
@@ -115,19 +110,17 @@ ingredient = Ingredient.find_or_create_by_upc('024600010849')
 ingredient.update(name: "Salt: Table")
 
 ingredient = Ingredient.find_or_create_by_upc('747599622137')
-ingredient.update(name: "Chocolate: Semisweet")
-# , density: 0.8128899183390536)
+ingredient.update(name: "Chocolate: Semisweet", density: 0.8128899183390536)
 
 ingredient = Ingredient.find_or_create_by_upc('093966005851')
-ingredient.update(name: "Milk: Whole")
-# , density: 1.0310022372748548)
+ingredient.update(name: "Milk: Whole", density: 1.0310022372748548)
 
 #recipes
-recipe = Recipe.new(name: "Whopper Cookie", user: site_admin)
+recipe = Recipe.new(name: "Control Cookie", user: site_admin)
 
 recipe.recipe_ingredients.build(
-  ingredient_amount: 1,
-  ingredient_storage_unit: 'c',
+  ingredient_amount: 50,
+  ingredient_storage_unit: 'g',
   ingredient: Ingredient.find_by(name: "Butter: Unsalted")
 )
 recipe.recipe_ingredients.build(
@@ -176,4 +169,114 @@ recipe.recipe_ingredients.build(
   ingredient: Ingredient.find_by(name: "Milk: Whole")
 )
 recipe.save
-recipe.populate_nutrition
+recipe.build_recipe_nutrients
+
+recipe = Recipe.new(name: "Mass Cookie", user: site_admin)
+
+recipe.recipe_ingredients.build(
+  ingredient_amount: 50,
+  ingredient_storage_unit: 'g',
+  ingredient: Ingredient.find_by(name: "Butter: Unsalted")
+)
+recipe.recipe_ingredients.build(
+  ingredient_amount: 20,
+  ingredient_storage_unit: 'g',
+  ingredient: Ingredient.find_by(name: "Sugar: Light Brown")
+)
+recipe.recipe_ingredients.build(
+  ingredient_amount: 10,
+  ingredient_storage_unit: 'g',
+  ingredient: Ingredient.find_by(name: "Sugar: Granulated")
+)
+recipe.recipe_ingredients.build(
+  ingredient_amount: 0.02,
+  ingredient_storage_unit: 'kg',
+  ingredient: Ingredient.find_by(name: "Egg: Whole")
+)
+recipe.recipe_ingredients.build(
+  ingredient_amount: 0.0881849768073511,
+  ingredient_storage_unit: 'lb',
+  ingredient: Ingredient.find_by(name: "Flour: All-Purpose")
+)
+recipe.recipe_ingredients.build(
+  ingredient_amount: 500000.0,
+  ingredient_storage_unit: 'µg',
+  ingredient: Ingredient.find_by(name: "Flour: Corn")
+)
+recipe.recipe_ingredients.build(
+  ingredient_amount: 750.0,
+  ingredient_storage_unit: 'mg',
+  ingredient: Ingredient.find_by(name: "Baking Soda")
+)
+recipe.recipe_ingredients.build(
+  ingredient_amount: 0.5,
+  ingredient_storage_unit: 'g',
+  ingredient: Ingredient.find_by(name: "Salt: Table")
+)
+recipe.recipe_ingredients.build(
+  ingredient_amount: 0.7054798144588088,
+  ingredient_storage_unit: 'oz',
+  ingredient: Ingredient.find_by(name: "Chocolate: Semisweet")
+)
+recipe.recipe_ingredients.build(
+  ingredient_amount: 8.604129078551063,
+  ingredient_storage_unit: 'oz',
+  ingredient: Ingredient.find_by(name: "Milk: Whole")
+)
+recipe.save
+recipe.build_recipe_nutrients
+
+recipe = Recipe.new(name: "Volume Cookie", user: site_admin)
+
+recipe.recipe_ingredients.build(
+  ingredient_amount: 52.81,
+  ingredient_storage_unit: 'ml',
+  ingredient: Ingredient.find_by(name: "Butter: Unsalted")
+)
+recipe.recipe_ingredients.build(
+  ingredient_amount: 5.0,
+  ingredient_storage_unit: 'tsp',
+  ingredient: Ingredient.find_by(name: "Sugar: Light Brown")
+)
+recipe.recipe_ingredients.build(
+  ingredient_amount: 0.8333310790705223,
+  ingredient_storage_unit: 'Tbsp',
+  ingredient: Ingredient.find_by(name: "Sugar: Granulated")
+)
+recipe.recipe_ingredients.build(
+  ingredient_amount: 0.6534117198703077,
+  ingredient_storage_unit: 'fl oz',
+  ingredient: Ingredient.find_by(name: "Egg: Whole")
+)
+recipe.recipe_ingredients.build(
+  ingredient_amount: 0.3333333333333334,
+  ingredient_storage_unit: 'c',
+  ingredient: Ingredient.find_by(name: "Flour: All-Purpose")
+)
+recipe.recipe_ingredients.build(
+  ingredient_amount: 0.001953131604307911,
+  ingredient_storage_unit: 'pt',
+  ingredient: Ingredient.find_by(name: "Flour: Corn")
+)
+recipe.recipe_ingredients.build(
+  ingredient_amount: 0.001627605267384652 ,
+  ingredient_storage_unit: 'pt',
+  ingredient: Ingredient.find_by(name: "Baking Soda")
+)
+recipe.recipe_ingredients.build(
+  ingredient_amount: 0.00043402761267025445 ,
+  ingredient_storage_unit: 'qt',
+  ingredient: Ingredient.find_by(name: "Salt: Table")
+)
+recipe.recipe_ingredients.build(
+  ingredient_amount: 0.024603577371048253,
+  ingredient_storage_unit: 'l',
+  ingredient: Ingredient.find_by(name: "Chocolate: Semisweet")
+)
+recipe.recipe_ingredients.build(
+  ingredient_amount: 0.06249996697847789,
+  ingredient_storage_unit: 'gal',
+  ingredient: Ingredient.find_by(name: "Milk: Whole")
+)
+recipe.save
+recipe.build_recipe_nutrients

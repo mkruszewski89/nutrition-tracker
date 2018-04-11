@@ -1,18 +1,25 @@
 <h1><%= @recipe.name %></h1>
 
-<h3>Nutrition</h3>
+<h2>Nutrition</h2>
 
+  <% headers = ["Macronutrients"] %>
+  <% data = collect_recipe_nutrients_for_table_display(@recipe, 'macronutrient') %>
+  <%= render(partial: 'application/table_view_generator/table_generator',
+  locals: {headers: headers, data: data}) %>
 
+  <% headers = ["Vitamins"] %>
+  <% data = collect_recipe_nutrients_for_table_display(@recipe, 'vitamin') %>
+  <%= render(partial: 'application/table_view_generator/table_generator',
+  locals: {headers: headers, data: data}) %>
 
-<h3>What You'll Need</h3>
+  <% headers = ["Minerals"] %>
+  <% data = collect_recipe_nutrients_for_table_display(@recipe, 'mineral') %>
+  <%= render(partial: 'application/table_view_generator/table_generator',
+  locals: {headers: headers, data: data}) %>
+
+<h2>What You'll Need</h2>
 
   <% headers = ["Amount", "Unit", "Ingredients"] %>
-  <% data = []
-  @recipe.ingredient_amounts.each do |ingredient_amount|
-    data << ["raw", ingredient_amount.amount]
-    data << ["raw", ingredient_amount.unit.name]
-    data << ["raw", ingredient_amount.ingredient.name]
-    data << ["new_row"] unless ingredient_amount == @recipe.ingredient_amounts.last
-  end %>
+  <% data = collect_recipe_ingredients_for_table_display(@recipe) %>
   <%= render(partial: 'application/table_view_generator/table_generator',
   locals: {headers: headers, data: data}) %>

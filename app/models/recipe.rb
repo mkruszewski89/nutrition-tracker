@@ -5,7 +5,7 @@ class Recipe < ApplicationRecord
   has_many :nutrients, through: :recipe_nutrients
   belongs_to :user
 
-  def populate_nutrition
+  def build_recipe_nutrients
     recipe_nutrients.destroy_all
     recipe_ingredients.each {|recipe_ingredient|
       recipe_ingredient.ingredient.ingredient_nutrients.each {|ingredient_nutrient|
