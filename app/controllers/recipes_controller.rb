@@ -9,12 +9,20 @@ class RecipesController < ApplicationController
     @recipe = Recipe.new
   end
 
+  def new_action
+    raise params
+  end
+
   def show
     @recipe = Recipe.find(params[:recipe_id])
   end
 
   def edit
     @recipe = Recipe.find(params[:recipe_id])
+  end
+
+  def edit_action
+    raise params
   end
 
 end

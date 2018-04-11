@@ -1,5 +1,7 @@
 <h1><%= @recipe.name %></h1>
 
+<%= link_to("Edit Recipe", edit_recipe_path(current_user, @recipe)) %>
+
 <h2>Nutrition</h2>
 
   <% headers = ["Macronutrients"] %>

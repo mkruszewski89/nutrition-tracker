@@ -4,6 +4,7 @@ class Recipe < ApplicationRecord
   has_many :recipe_nutrients, dependent: :destroy
   has_many :nutrients, through: :recipe_nutrients
   belongs_to :user
+  accepts_nested_attributes_for :recipe_ingredients
 
   def build_recipe_nutrients
     recipe_nutrients.destroy_all

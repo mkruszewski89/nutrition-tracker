@@ -1,1 +1,127 @@
-new recipe
+  <head>
+    <script type='text/javascript'>
+
+      function add_recipe_ingredient(){
+        var table = document.getElementById("recipe-ingredient-table");
+        var row_index = table.getElementsByTagName("tr").length-1;
+        var row = table.insertRow(row_index+1);
+        row.id = `recipe-ingredient-table-row-${row_index}`;
+        add_recipe_ingredient_amount(row, row_index);
+        add_recipe_ingredient_storage_unit(row, row_index);
+        add_recipe_ingredient_ingredient_name(row, row_index);
+        add_recipe_ingredient_ingredient_upc(row, row_index);
+        add_recipe_ingredient_remove_button(table, row, row_index);
+      }
+
+      function add_recipe_ingredient_amount(row, row_index){
+        var td = document.createElement('td');
+        var input = document.createElement('input');
+        input.type = "text";
+        input.name = `recipe[recipe_ingredients_attributes][${row_index}][ingredient_amount]`;
+        td.appendChild(input);
+        row.appendChild(td);
+      }
+
+      function add_recipe_ingredient_storage_unit(row, row_index){
+        var td = document.createElement('td');
+        var input = document.createElement('select');
+        input.name = `recipe[recipe_ingredients_attributes][${row_index}][ingredient_storage_unit]`;
+        <% Unit.all.each do |unit| %>
+          var option = document.createElement("option");
+          option.value = "<%= unit.name %>";
+          option.text = "<%= unit.name %>";
+          input.add(option);
+        <% end %>
+        td.appendChild(input);
+        row.appendChild(td);
+      }
+
+      function add_recipe_ingredient_ingredient_name(row, row_index){
+        var td = document.createElement('td');
+        var input = document.createElement('input');
+        input.type = "text";
+        input.setAttribute('list', "ingredients_autocomplete");
+        input.name = `recipe[recipe_ingredients_attributes][${row_index}][ingredient_name]`;
+        td.appendChild(input);
+        row.appendChild(td);
+      }
+
+      function add_recipe_ingredient_ingredient_upc(row, row_index){
+        var td = document.createElement('td');
+        var input = document.createElement('input');
+        input.type = "text";
+        input.name = `recipe[recipe_ingredients_attributes][${row_index}][ingredient_upc]`;
+        td.appendChild(input);
+        row.appendChild(td);
+      }
+
+      function add_recipe_ingredient_remove_button(table, row, row_index){
+        var td = document.createElement('td');
+        var button = document.createElement('button');
+        button.innerHTML = "Remove Ingredient";
+        button.addEventListener("click", function(){row.parentNode.removeChild(row)});
+        td.appendChild(button);
+        row.appendChild(td);
+      }
+
+    </script>
+  </head>
+
+  <%= form_for @recipe, url: new_recipe_path(current_user), method: :post do |form| %>
+
+    <% if @recipe.errors.any? %>
+      <%= render(partial: 'application/form_generator/errors',
+        locals: {errors: @recipe.errors}) %>
+    <% end %>
+
+    <h2>Name:</h2>
+
+      <%= form.text_field :name %><br>
+
+    <h2>Ingredients:<h2>
+
+      <table id="recipe-ingredient-table">
+        <tr>
+          <th>Amount</th>
+          <th>Unit</th>
+          <th>Find Ingredient<br>By Name</th>
+          <th>Or Create Ingredient<br>From UPC</th>
+        </tr>
+
+        <%= form.fields_for :recipe_ingredients do |sub_form| %>
+
+          <tr id="recipe-ingredient-table-row-<%=sub_form.index%>">
+            <td>
+              <%= sub_form.text_field :ingredient_amount,
+              value: sub_form.object.try(:ingredient_amount) %>
+            </td>
+            <td>
+              <%= sub_form.collection_select :ingredient_storage_unit, Unit.all, :name, :name,
+              {selected: sub_form.object.try(:ingredient_storage_unit).try(:name)} %>
+            </td>
+            <td>
+              <%= sub_form.text_field :ingredient_name,
+              value: sub_form.object.try(:ingredient).try(:name),
+              list: "ingredients_autocomplete" %>
+            </td>
+            <td>
+              <%= sub_form.text_field :ingredient_upc,
+              value: sub_form.object.try(:ingredient).try(:upc) %>
+            </td>
+            <script type='text/javascript'>
+              var table = document.getElementById("recipe-ingredient-table");
+              var row = document.getElementById("recipe-ingredient-table-row-<%=sub_form.index%>");
+              var row_index = <%=sub_form.index%>;
+              add_recipe_ingredient_remove_button(table, row, row_index);
+            </script>
+          </tr>
+
+        <% end %>
+
+      </table><br>
+
+      <input id="add_ingredient_button" type="button" value="Add Ingredient" onclick="add_recipe_ingredient();">
+
+    <%= form.submit "Submit" %>
+
+  <% end %>
