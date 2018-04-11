@@ -1,10 +1,29 @@
 class Recipe < ApplicationRecord
+  validates_with RecipeValidator
   has_many :recipe_ingredients, dependent: :destroy
   has_many :ingredients, through: :recipe_ingredients
   has_many :recipe_nutrients, dependent: :destroy
   has_many :nutrients, through: :recipe_nutrients
   belongs_to :user
   accepts_nested_attributes_for :recipe_ingredients
+
+  def recipe_ingredients_attributes=(recipe_ingredients_attributes)
+    recipe_ingredients.destroy_all
+    recipe_ingredients_attributes.values.each {|recipe_ingredient_attributes|
+      amount = recipe_ingredient_attributes[:ingredient_amount].to_f
+      storage_unit = Unit.find_by(name: recipe_ingredient_attributes[:ingredient_storage_unit]).abbreviation
+      ingredient = set_recipe_ingredient_ingredient(recipe_ingredient_attributes[:ingredient_name], recipe_ingredient_attributes[:ingredient_upc])
+      recipe_ingredient = recipe_ingredients.build(ingredient_amount: amount, ingredient_storage_unit: storage_unit, ingredient: ingredient)
+      recipe_ingredient.save
+    }
+  end
+
+  def set_recipe_ingredient_ingredient(name, upc)
+    ingredient = Ingredient.find_by(name: name)
+    ingredient = Ingredient.find_or_create_by_upc(upc) if !ingredient && name == "" && upc.length == 12
+    ingredient = Ingredient.new(name: name, upc: upc) if !ingredient
+    ingredient
+  end
 
   def build_recipe_nutrients
     recipe_nutrients.destroy_all

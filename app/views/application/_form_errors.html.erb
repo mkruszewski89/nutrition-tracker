@@ -1,0 +1,10 @@
+<h2>Please fix the following <%= pluralize(errors.count, "error") %>:</h2>
+
+<ul>
+  <% errors.messages.each do |attribute, message_array| %>
+    <% clean_attribute = attribute.to_s.gsub('.',' ').gsub('_',' ').titleize %>
+    <% message_array.each_with_index do |message, index| %>
+      <li><%= clean_attribute %> <%= message %></li>
+    <% end %>
+  <% end %>
+  </ul>
