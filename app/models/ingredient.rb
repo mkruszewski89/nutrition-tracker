@@ -1,7 +1,7 @@
 class Ingredient < ApplicationRecord
   has_many :recipe_ingredients
   has_many :recipes, through: :recipe_ingredients
-  has_many :ingredient_nutrients
+  has_many :ingredient_nutrients, dependent: :destroy
   has_many :nutrients, through: :ingredient_nutrients
 
   def self.find_or_create_by_upc(upc)

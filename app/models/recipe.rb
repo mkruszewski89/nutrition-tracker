@@ -1,7 +1,7 @@
 class Recipe < ApplicationRecord
-  has_many :recipe_ingredients
+  has_many :recipe_ingredients, dependent: :destroy
   has_many :ingredients, through: :recipe_ingredients
-  has_many :recipe_nutrients
+  has_many :recipe_nutrients, dependent: :destroy
   has_many :nutrients, through: :recipe_nutrients
   belongs_to :user
 

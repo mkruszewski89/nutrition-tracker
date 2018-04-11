@@ -9,7 +9,7 @@ IngredientNutrient.destroy_all
 RecipeNutrient.destroy_all
 
 #users
-site_admin = User.create(name: "Site Administrator", email: "admin@nutritiontracker.com", password: 'p@ssw0rd', birthday: '06/22/1989', gender: 'male')
+site_admin = User.create(name: "Site Administrator", email: "admin@nutritiontracker.com", password: 'p@ssw0rd', role: 1, birthday: '06/22/1989', gender: 'male')
 
 #units
 Unit.create(physical_property: 'volume', lowest_unit: 'milliliter', lowest_unit_equivalence: 1.000000, name: 'milliliter', abbreviation: 'ml')
