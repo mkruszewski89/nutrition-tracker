@@ -1,5 +1,7 @@
 <h1>Recipes</h1>
 
+<%= link_to("Create a Recipe", new_recipe_path(current_user)) %>
+
 <% headers = ["Recipe", "Creator"] %>
 <% data = collect_recipe_and_user_links_for_table_display(@recipes) %>
 <%= render(partial: 'application/table_view_generator/table_generator',
