@@ -8,30 +8,30 @@ class UsdaRequester
   def initialize(upc)
     @data = ""
     @data_to_assign = ""
-    ndbno = get_ndbno(upc)
-    if ndbno != ""
-      get_data(ndbno)
-      @data_to_assign = {ndbno: ndbno, upc: upc}
+    usda_no = get_usda_no(upc)
+    if usda_no != ""
+      get_data(usda_no)
+      @data_to_assign = {usda_no: usda_no, upc: upc}
       get_data_to_assign
     end
   end
 
-  def get_ndbno(upc)
+  def get_usda_no(upc)
     url = "https://api.nal.usda.gov/ndb/search/?format=json&q=#{upc}&api_key=#{API_KEY}"
-    usda_info = JSON.load(open(url))
-    usda_info['list'] ? usda_info['list']['item'][0]['ndbno'] : ""
+    usda_data = JSON.load(open(url))
+    usda_data['list'] ? usda_data['list']['item'][0]['ndbno'] : ""
   end
 
-  def get_data(ndbno)
-    url = "https://api.nal.usda.gov/ndb/reports/?ndbno=#{ndbno}&type=f&format=json&api_key=#{API_KEY}"
-    usda_info = JSON.load(open(url))
-    @data = usda_info['report']['food']
+  def get_data(usda_no)
+    url = "https://api.nal.usda.gov/ndb/reports/?ndbno=#{usda_no}&type=f&format=json&api_key=#{API_KEY}"
+    usda_data = JSON.load(open(url))
+    @data = usda_data['report']['food']
   end
 
   def get_data_to_assign
     get_name
-    get_storage_unit
-    get_nutrients_per_storage_unit
+    get_usda_unit
+    get_nutrient_data
     get_density
   end
 
@@ -39,20 +39,23 @@ class UsdaRequester
     data_to_assign[:name] = "#{data['name'][0..data['name'].index(', UPC:')-1].downcase}: Pending N"
   end
 
-  def get_storage_unit
-    data_to_assign[:storage_unit] = data['ru']
+  def get_usda_unit
+    data_to_assign[:usda_unit] = data['ru']
   end
 
-  def get_nutrients_per_storage_unit
+  def get_nutrient_data
     data_to_assign[:nutrients] = {}
     data['nutrients'].each {|attribute_hash|
-      data_to_assign[:nutrients][attribute_hash['nutrient_id']] = {nutrient_usda_name: attribute_hash['name'], nutrient_amount_per_ingredient_storage_unit: attribute_hash['value'].to_f/100, nutrient_storage_unit: attribute_hash['unit']}
+      data_to_assign[:nutrients][attribute_hash['nutrient_id']] = {
+        nutrient_usda_name: attribute_hash['name'],
+        nutrient_amount_per_ingredient_usda_unit: attribute_hash['value'].to_f/100,
+        nutrient_usda_unit: attribute_hash['unit']}
     }
   end
 
   def get_density
-    serving = get_data_for_density(data['nutrients'][0]['measures'][0], 'label', 'qty')
-    equivalent = get_data_for_density(data['nutrients'][0]['measures'][0], 'eunit', 'eqv')
+    serving = get_data_for_density_calculation(data['nutrients'][0]['measures'][0], 'label', 'qty')
+    equivalent = get_data_for_density_calculation(data['nutrients'][0]['measures'][0], 'eunit', 'eqv')
     if serving.values.any?{|v| v==""} || equivalent.values.any?{|v| v==""} || serving[:unit].physical_property == equivalent[:unit].physical_property
       data_to_assign[:name] = "#{data_to_assign[:name]}&D"
     else
@@ -60,16 +63,16 @@ class UsdaRequester
     end
   end
 
-  def get_data_for_density(usda_source, unit, quantity)
-    quantity = usda_source[quantity]
-    unit = Unit.find_by(name: usda_source[unit]) ? Unit.find_by(name: usda_source[unit]) : Unit.find_by(abbreviation: usda_source[unit])
-    quantity = "" if quantity == nil
+  def get_data_for_density_calculation(source, unit, amount)
+    amount = source[amount]
+    unit = Unit.find_by(name: source[unit]) ? Unit.find_by(name: source[unit]) : Unit.find_by(abbreviation: source[unit])
+    amount = "" if amount == nil
     unit = "" if unit == nil
-    {quantity: quantity, unit: unit}
+    {amount: amount, unit: unit}
   end
 
   def calculate_density(serving, equivalent)
-    ratio = (serving[:quantity] * serving[:unit].lowest_unit_equivalence) / (equivalent[:quantity] * equivalent[:unit].lowest_unit_equivalence)
+    ratio = (serving[:amount] * serving[:unit].lowest_unit_equivalence) / (equivalent[:amount] * equivalent[:unit].lowest_unit_equivalence)
     density = serving[:unit].physical_property == 'mass' ? ratio : 1/ratio
   end
 

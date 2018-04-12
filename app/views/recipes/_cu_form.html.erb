@@ -17,7 +17,7 @@
       var td = document.createElement('td');
       var input = document.createElement('input');
       input.type = "text";
-      input.name = `recipe[recipe_ingredients_attributes][${row_index}][ingredient_amount]`;
+      input.name = `recipe[recipe_ingredients_attributes][${row_index}][amount_in_recipe]`;
       td.appendChild(input);
       row.appendChild(td);
     }
@@ -25,7 +25,7 @@
     function add_recipe_ingredient_storage_unit(row, row_index){
       var td = document.createElement('td');
       var input = document.createElement('select');
-      input.name = `recipe[recipe_ingredients_attributes][${row_index}][ingredient_storage_unit]`;
+      input.name = `recipe[recipe_ingredients_attributes][${row_index}][user_defined_unit]`;
       <% Unit.all.each do |unit| %>
         var option = document.createElement("option");
         option.value = "<%= unit.name %>";
@@ -91,12 +91,12 @@
 
         <tr id="recipe-ingredient-table-row-<%=sub_form.index%>">
           <td>
-            <%= sub_form.text_field :ingredient_amount,
-            value: sub_form.object.try(:ingredient_amount) %>
+            <%= sub_form.text_field :amount_in_recipe,
+            value: sub_form.object.try(:amount_in_recipe) %>
           </td>
           <td>
-            <%= sub_form.collection_select :ingredient_storage_unit, Unit.all, :name, :name,
-            {selected: sub_form.object.try(:ingredient_storage_unit).try(:name)} %>
+            <%= sub_form.collection_select :user_defined_unit, Unit.all, :name, :name,
+            {selected: sub_form.object.try(:user_defined_unit)} %>
           </td>
           <td>
             <%= sub_form.text_field :ingredient_name,

@@ -30,7 +30,14 @@ class RecipesController < ApplicationController
   end
 
   def edit_action
-    raise params
+    @user = User.find(params[:id])
+    @recipe = Recipe.find(params[:recipe_id])
+    if @recipe.update(recipe_params)
+      @recipe.build_recipe_nutrients
+      redirect_to recipe_path(@user, @recipe)
+    else
+      render :new
+    end
   end
 
   private
@@ -39,10 +46,10 @@ class RecipesController < ApplicationController
     params.require(:recipe).permit(
       :name,
       recipe_ingredients_attributes: [
-        :ingredient_amount,
+        :amount_in_recipe,
         :ingredient_name,
         :ingredient_upc,
-        :ingredient_storage_unit]
+        :user_defined_unit]
     )
   end
 

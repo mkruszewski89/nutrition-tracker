@@ -10,24 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180411120217) do
+ActiveRecord::Schema.define(version: 20180412163433) do
 
   create_table "ingredient_nutrients", force: :cascade do |t|
     t.integer "ingredient_id"
     t.integer "nutrient_id"
-    t.string "ingredient_storage_unit", default: ""
-    t.string "nutrient_storage_unit", default: ""
-    t.float "nutrient_amount_per_ingredient_storage_unit", default: 0.0
+    t.float "amount_per_ingredient_usda_unit", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "ingredients", force: :cascade do |t|
     t.string "name", default: ""
-    t.string "storage_unit", default: ""
+    t.string "usda_unit", default: ""
     t.float "density", default: 0.0
     t.string "upc", default: ""
-    t.string "ndbno", default: ""
+    t.string "usda_no", default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -36,7 +34,7 @@ ActiveRecord::Schema.define(version: 20180411120217) do
     t.string "name", default: ""
     t.string "usda_name", default: ""
     t.string "nutrient_type", default: ""
-    t.string "storage_unit", default: ""
+    t.string "usda_unit", default: ""
     t.string "recommendation_type", default: ""
     t.float "recommendation_amount_I", default: 0.0
     t.float "recommendation_amount_FC", default: 0.0
@@ -56,8 +54,8 @@ ActiveRecord::Schema.define(version: 20180411120217) do
   create_table "recipe_ingredients", force: :cascade do |t|
     t.integer "recipe_id"
     t.integer "ingredient_id"
-    t.float "ingredient_amount"
-    t.string "ingredient_storage_unit"
+    t.float "amount_in_recipe"
+    t.string "user_defined_unit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -65,8 +63,7 @@ ActiveRecord::Schema.define(version: 20180411120217) do
   create_table "recipe_nutrients", force: :cascade do |t|
     t.integer "recipe_id"
     t.integer "nutrient_id"
-    t.float "nutrient_amount", default: 0.0
-    t.string "nutrient_storage_unit", default: ""
+    t.float "amount_in_recipe", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

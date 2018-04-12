@@ -5,10 +5,10 @@ module RecipesHelper
     recipe_nutrients = recipe.recipe_nutrients.collect {|recipe_nutrient|
       recipe_nutrient if recipe_nutrient.nutrient.nutrient_type == nutrient_type
     }.compact
-    recipe_nutrients.each { |recipe_nutrient|
+    recipe_nutrients.each {|recipe_nutrient|
       data << ["raw", recipe_nutrient.nutrient.name]
-      data << ["raw", recipe_nutrient.nutrient_amount.round(1)]
-      data << ["raw", recipe_nutrient.nutrient_storage_unit]
+      data << ["raw", recipe_nutrient.amount_in_recipe.round(1)]
+      data << ["raw", recipe_nutrient.nutrient.usda_unit]
       data << ["new_row"] unless recipe_nutrient == recipe_nutrients.last
     }
     data
@@ -17,8 +17,8 @@ module RecipesHelper
   def collect_recipe_ingredients_for_table_display(recipe)
     data = []
     recipe.recipe_ingredients.each {|recipe_ingredient|
-      data << ["raw", recipe_ingredient.ingredient_amount]
-      data << ["raw", recipe_ingredient.ingredient_storage_unit]
+      data << ["raw", recipe_ingredient.amount_in_recipe]
+      data << ["raw", recipe_ingredient.user_defined_unit]
       data << ["raw", recipe_ingredient.ingredient.name]
       data << ["new_row"] unless recipe_ingredient == recipe.recipe_ingredients.last
     }
