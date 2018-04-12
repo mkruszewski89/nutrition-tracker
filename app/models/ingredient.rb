@@ -9,7 +9,7 @@ class Ingredient < ApplicationRecord
       self.find_by(upc: upc)
     else
       usda_request = UsdaRequester.new(upc)
-      usda_request.data != "" ? self.create_from_usda_data(usda_request.data_to_assign) : self.new(upc: upc)
+      self.create_from_usda_data(usda_request.data_to_assign) if usda_request.data != ""
     end
   end
 
@@ -37,10 +37,3 @@ class Ingredient < ApplicationRecord
   end
 
 end
-
-# ingredient_nutrient = IngredientNutrient.new
-# ingredient_nutrient[:nutrient_amount_per_ingredient_storage_unit] = value[:nutrient_amount_per_ingredient_storage_unit]
-# ingredient_nutrient[:nutrient_storage_unit] = value[:nutrient_storage_unit]
-# ingredient_nutrient[:ingredient_storage_unit] = ingredient.storage_unit
-# ingredient.ingredient_nutrients << ingredient_nutrient
-# nutrient.ingredient_nutrients << ingredient_nutrient

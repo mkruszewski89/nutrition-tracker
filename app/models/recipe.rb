@@ -1,5 +1,6 @@
 class Recipe < ApplicationRecord
   validates_with RecipeValidator
+  attr_accessor :ingredient_join_errors
   has_many :recipe_ingredients, dependent: :destroy
   has_many :ingredients, through: :recipe_ingredients
   has_many :recipe_nutrients, dependent: :destroy
@@ -9,20 +10,45 @@ class Recipe < ApplicationRecord
 
   def recipe_ingredients_attributes=(recipe_ingredients_attributes)
     recipe_ingredients.destroy_all
+    @ingredient_join_errors = []
     recipe_ingredients_attributes.values.each {|recipe_ingredient_attributes|
-      amount = recipe_ingredient_attributes[:ingredient_amount].to_f
-      storage_unit = Unit.find_by(name: recipe_ingredient_attributes[:ingredient_storage_unit]).abbreviation
-      ingredient = set_recipe_ingredient_ingredient(recipe_ingredient_attributes[:ingredient_name], recipe_ingredient_attributes[:ingredient_upc])
-      recipe_ingredient = recipe_ingredients.build(ingredient_amount: amount, ingredient_storage_unit: storage_unit, ingredient: ingredient)
-      recipe_ingredient.save
+      ingredient = recipe_ingredient_set_ingredient(recipe_ingredient_attributes[:ingredient_name], recipe_ingredient_attributes[:ingredient_upc])
+      check_unit_mismatch(recipe_ingredient_attributes[:ingredient_storage_unit], ingredient) if ingredient_join_errors.empty?
+      recipe_ingredients.build(
+        ingredient: ingredient,
+        ingredient_amount: recipe_ingredient_attributes[:ingredient_amount],
+        ingredient_storage_unit: recipe_ingredient_attributes[:ingredient_storage_unit])
     }
   end
 
-  def set_recipe_ingredient_ingredient(name, upc)
-    ingredient = Ingredient.find_by(name: name)
-    ingredient = Ingredient.find_or_create_by_upc(upc) if !ingredient && name == "" && upc.length == 12
-    ingredient = Ingredient.new(name: name, upc: upc) if !ingredient
+  def recipe_ingredient_set_ingredient(name, upc)
+    collect_data_entry_errors(name, upc)
+    ingredient = Ingredient.new(name: name, upc: upc)
+    if ingredient_join_errors.empty?
+      ingredient = Ingredient.find_by(name: name)
+      if !ingredient
+        ingredient = Ingredient.find_or_create_by_upc(upc)
+        if !ingredient
+          ingredient = Ingredient.new(name: name, upc: upc)
+          @ingredient_join_errors << "UPC #{upc} not found in USDA database"
+        end
+      end
+    end
     ingredient
+  end
+
+  def collect_data_entry_errors(name, upc)
+    @ingredient_join_errors << "name must be selected or UPC must be entered" if name == "" && upc == ""
+    @ingredient_join_errors << "#{name} does not exist in our database. Please select an ingredient from our database or create a new ingredient from UPC" if name != "" && !Ingredient.find_by(name: name)
+    @ingredient_join_errors << "UPC #{upc} is an invalid UPC. A valid UPC is 12 digits" if name == "" && upc != "" && upc.length != 12
+  end
+
+  def check_unit_mismatch(unit_input, ingredient)
+    user_unit = Unit.find_by(name: unit_input)
+    ingredient_unit = Unit.find_by(abbreviation: ingredient.storage_unit)
+    if user_unit.physical_property != ingredient_unit.physical_property && ingredient.density == 0.0
+      @ingredient_join_errors << "Unit is invalid for #{ingredient.name}. #{unit_input} measures #{user_unit.physical_property}. Until this ingredient is confirmed by a site administrator, its unit must measure #{ingredient_unit.physical_property} to fetch USDA data."
+    end
   end
 
   def build_recipe_nutrients
