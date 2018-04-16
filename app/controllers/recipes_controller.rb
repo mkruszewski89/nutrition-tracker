@@ -53,6 +53,13 @@ class RecipesController < ApplicationController
     end
   end
 
+  def toggle_favorite
+    @user = User.find(params[:user_id])
+    @recipe = Recipe.find(params[:recipe_id])
+    Favorite.toggle_recipe(@user, @recipe)
+    redirect_to recipe_ingredients_path(@recipe)
+  end
+
   private
 
   def recipe_params

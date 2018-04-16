@@ -29,4 +29,6 @@ Rails.application.routes.draw do
     get '/favorite-recipes', to: 'users#favorite_recipes', as: 'user_favorite_recipes'
   end
 
+  post '/:user_id/:recipe_id/toggle-favorite-recipe', to: 'recipes#toggle_favorite', as: 'toggle_favorite_recipe'
+
 end

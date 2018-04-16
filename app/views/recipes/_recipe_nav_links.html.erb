@@ -1,7 +1,16 @@
 <h1><%= recipe.name %></h1>
+
+<% if Favorite.all.find_by(recipe: recipe, user: user) %>
+  <%= link_to("Remove from Favorites", toggle_favorite_recipe_path(user, recipe), method: :post) %>
+<% else %>
+  <%= link_to("Add to Favorites", toggle_favorite_recipe_path(user, recipe), method: :post) %>
+<% end %>
+
+<br>
+
 <%= link_to("Ingredients", recipe_ingredients_path(recipe)) %>
 <%= link_to("Instructions", recipe_instructions_path(recipe)) %>
 <%= link_to("Nutrition", recipe_nutrition_path(recipe)) %>
 <% if user == current_user || current_user.admin? %>
-<%= link_to("Edit", edit_recipe_path(recipe)) %>
+  <%= link_to("Edit", edit_recipe_path(recipe)) %>
 <% end %>
