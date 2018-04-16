@@ -1,27 +1,18 @@
 <h1><%= @user.name %></h1>
-<%= link_to("edit account", edit_user_path(@user)) %>
-<%= link_to("log out", user_path(@user)) %>
 
-<h2>Recipes</h2>
-
-  <% headers = ["Recipe"] %>
-  <% data = collect_user_recipes_for_table_display(@user) %>
-  <%= render(partial: 'application/table_view_generator/table_generator',
-  locals: {headers: headers, data: data}) %>
-
-<h2>Recommended Nutrients</h2>
+<h2>Progress to Targets</h2>
 
   <% headers = ["Macronutrients"] %>
-  <% data = collect_user_recommended_nutrients_for_table_display(@user, 'macronutrient') %>
+  <% data = collect_user_target_progress_for_table_display(@user, 'macronutrient') %>
   <%= render(partial: 'application/table_view_generator/table_generator',
   locals: {headers: headers, data: data}) %>
 
   <% headers = ["Vitamins"] %>
-  <% data = collect_user_recommended_nutrients_for_table_display(@user, 'vitamin') %>
+  <% data = collect_user_target_progress_for_table_display(@user, 'vitamin') %>
   <%= render(partial: 'application/table_view_generator/table_generator',
   locals: {headers: headers, data: data}) %>
 
   <% headers = ["Minerals"] %>
-  <% data = collect_user_recommended_nutrients_for_table_display(@user, 'mineral') %>
+  <% data = collect_user_target_progress_for_table_display(@user, 'mineral') %>
   <%= render(partial: 'application/table_view_generator/table_generator',
   locals: {headers: headers, data: data}) %>

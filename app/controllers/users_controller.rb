@@ -8,4 +8,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def index_recipes
+    @user = User.find(params[:id])
+  end
+
 end

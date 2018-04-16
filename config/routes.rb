@@ -8,8 +8,9 @@ Rails.application.routes.draw do
   scope '/users' do
     scope '/:id' do
       get '/', to: 'users#show', as: 'user'
-      get '/edit', to: 'users#edit', as: 'edit_user' 
+      get '/edit', to: 'users#edit', as: 'edit_user'
       scope '/recipes' do
+        get '/', to: 'users#index_recipes', as: 'user_recipes'
         get '/new', to: 'recipes#new', as: 'new_recipe'
         post '/new', to: 'recipes#new_action', as: nil
         get '/:recipe_id', to: 'recipes#show', as: 'recipe'
