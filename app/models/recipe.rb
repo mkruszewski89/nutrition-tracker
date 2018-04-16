@@ -78,4 +78,10 @@ class Recipe < ApplicationRecord
       unit.physical_property == 'mass' ? amount * (1/density) : amount * density
     end
 
+  # Queries
+
+    def nutrient_amount(nutrient)
+      recipe_nutrients.find_by(nutrient: Nutrient.find_by(name: nutrient)).amount_in_recipe
+    end
+
 end

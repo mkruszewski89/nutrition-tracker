@@ -1,6 +1,6 @@
-<h1><%= @user.name %></h1>
+<h1>Progress to Targets</h1>
 
-<h2>Progress to Targets</h2>
+<%= render(partial: 'nav_links', locals: {user: current_user}) %>
 
   <% headers = ["Macronutrients"] %>
   <% data = collect_user_target_progress_for_table_display(@user, 'macronutrient') %>

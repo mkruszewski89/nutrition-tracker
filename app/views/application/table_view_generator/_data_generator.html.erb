@@ -1,8 +1,15 @@
-
 <% case datum[0] %>
-<% when "raw" %>
+<% when "raw multiple start" %>
+  <td><%= datum[1] %>
+<% when "raw multiple continue" %>
+  <br><%= datum[1] %>
+<% when "raw multiple end" %>
+  <br><%= datum[1] %></td>
+<% when "raw single" %>
   <td><%= datum[1] %></td>
-<% when "link" %>
+<% when "link multiple start" %>
+  <td><%= link_to(datum[1], datum[2]) %>
+<% when "link single" %>
   <td><%= link_to(datum[1], datum[2]) %></td>
 <% when "new_row" %>
   </tr><tr>

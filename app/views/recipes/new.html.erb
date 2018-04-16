@@ -1,5 +1,7 @@
 <h1>New Recipe</h1>
 
+<%= render(partial: 'nav_links', locals: {user: current_user}) %>
+
 <%= render(partial: 'cu_form',
 locals: {
   model: @recipe,

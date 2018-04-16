@@ -7,10 +7,14 @@ Rails.application.routes.draw do
 
   scope '/users' do
     scope '/:id' do
-      get '/', to: 'users#show', as: 'user'
-      get '/edit', to: 'users#edit', as: 'edit_user'
+      get '/progress', to: 'users#progress', as: 'user_progress'
+      get '/targets', to: 'users#targets', as: 'user_targets'
+      get '/food-log', to: 'users#food_log', as: 'user_food_log'
+      get '/account', to: 'users#account', as: 'user'
+      get '/edit', to: 'users#edit_account', as: 'edit_user'
       scope '/recipes' do
         get '/', to: 'users#index_recipes', as: 'user_recipes'
+        get '/favorites', to: 'users#favorite_recipes', as: 'user_favorite_recipes'
         get '/new', to: 'recipes#new', as: 'new_recipe'
         post '/new', to: 'recipes#new_action', as: nil
         get '/:recipe_id', to: 'recipes#show', as: 'recipe'

@@ -1,8 +1,8 @@
-<h1>Recipes</h1>
+<h1>All Recipes</h1>
 
-<%= link_to("Create a Recipe", new_recipe_path(current_user)) %>
+<%= render(partial: 'nav_links', locals: {user: current_user}) %>
 
-<% headers = ["Recipe", "Creator"] %>
-<% data = collect_recipe_and_user_links_for_table_display(@recipes) %>
+<% headers = ["All Recipes"] %>
+<% data = collect_recipes_for_table_display(@recipes) %>
 <%= render(partial: 'application/table_view_generator/table_generator',
 locals: {headers: headers, data: data}) %>
