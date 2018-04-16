@@ -1,16 +1,16 @@
 <head>
   <script type='text/javascript'>
 
-    function add_recipe_ingredient(){
-      var table = document.getElementById("recipe-ingredient-table");
+    function add_form_field(){
+      var table = document.getElementById("recipe_ingredients-table");
       var row_index = table.getElementsByTagName("tr").length-1;
       var row = table.insertRow(row_index+1);
-      row.id = `recipe-ingredient-table-row-${row_index}`;
+      row.id = `recipe_ingredient-table-row-${row_index}`;
       add_recipe_ingredient_amount(row, row_index);
       add_recipe_ingredient_storage_unit(row, row_index);
       add_recipe_ingredient_ingredient_name(row, row_index);
       add_recipe_ingredient_ingredient_upc(row, row_index);
-      add_recipe_ingredient_remove_button(table, row, row_index);
+      add_form_field_remove_button(table, row, row_index);
     }
 
     function add_recipe_ingredient_amount(row, row_index){
@@ -55,72 +55,55 @@
       row.appendChild(td);
     }
 
-    function add_recipe_ingredient_remove_button(table, row, row_index){
+    function add_form_field_remove_button(table, row, row_index){
       var td = document.createElement('td');
       var button = document.createElement('button');
-      button.innerHTML = "Remove Ingredient";
-      button.addEventListener("click", function(){row.parentNode.removeChild(row)});
+      button.innerHTML = "Remove Field";
+      button.addEventListener("click", function(){
+        var rows = table.getElementsByTagName("tr").length;
+        row.parentNode.removeChild(row);
+        for(i = 0; i < rows; i++){
+          if(hidden_input = document.getElementById(`recipe_recipe_ingredients_attributes_${i}_id`)) {
+            hidden_input.parentNode.removeChild(hidden_input)
+          }
+        }
+      });
       td.appendChild(button);
       row.appendChild(td);
     }
 
   </script>
+
 </head>
-<%= form_for model, url: url, method: method do |form| %>
 
-  <% if model.errors.any? %>
-    <%= render(partial: 'application/form_errors',
-      locals: {errors: model.errors}) %>
-  <% end %>
-
-  <h2>Name:</h2>
-
-    <%= form.text_field :name %><br>
-
-  <h2>Ingredients:<h2>
-
-    <table id="recipe-ingredient-table">
-      <tr>
-        <th>Amount</th>
-        <th>Unit</th>
-        <th>Find Ingredient<br>By Name</th>
-        <th>Or Create Ingredient<br>From UPC</th>
-      </tr>
-
-      <%= form.fields_for :recipe_ingredients do |sub_form| %>
-
-        <tr id="recipe-ingredient-table-row-<%=sub_form.index%>">
-          <td>
-            <%= sub_form.text_field :amount_in_recipe,
-            value: sub_form.object.try(:amount_in_recipe) %>
-          </td>
-          <td>
-            <%= sub_form.collection_select :user_defined_unit, Unit.all, :name, :name,
-            {selected: sub_form.object.try(:user_defined_unit)} %>
-          </td>
-          <td>
-            <%= sub_form.text_field :ingredient_name,
-            value: sub_form.object.try(:ingredient).try(:name),
-            list: "ingredients_autocomplete" %>
-          </td>
-          <td>
-            <%= sub_form.text_field :ingredient_upc,
-            value: sub_form.object.try(:ingredient).try(:upc) %>
-          </td>
-          <script type='text/javascript'>
-            var table = document.getElementById("recipe-ingredient-table");
-            var row = document.getElementById("recipe-ingredient-table-row-<%=sub_form.index%>");
-            var row_index = <%=sub_form.index%>;
-            add_recipe_ingredient_remove_button(table, row, row_index);
-          </script>
-        </tr>
-
-      <% end %>
-
-    </table><br>
-
-    <input id="add_ingredient_button" type="button" value="Add Ingredient" onclick="add_recipe_ingredient();">
-
-  <%= form.submit "Submit" %>
-
-<% end %>
+<%= render(partial: 'application/form_generator/form_for',
+locals: {
+  model: model,
+  url: url,
+  method: method,
+  data: {
+    section_1: {
+      for: model,
+      label: 'Name',
+      section_data: [
+        [
+          ['td', 'form_builder.text_field(:name)']
+        ]
+      ]
+    },
+    section_2: {
+      for: :recipe_ingredients,
+      label: 'Ingredients',
+      headers: ['Amount', 'Unit', 'Find Ingredient By Name', 'Or Create Ingredient From UPC'],
+      dynamic_add_remove: true,
+      section_data: [
+        [
+          ['td', 'field_builder.text_field(:amount_in_recipe)'],
+          ['td', 'field_builder.collection_select(:user_defined_unit, Unit.all, :name, :name, {selected: model.recipe_ingredients[field_builder.index].user_defined_unit})'],
+          ['td', 'field_builder.text_field(:ingredient, name: "recipe[recipe_ingredients_attributes][#{field_builder.index}][ingredient_name]", value: model.recipe_ingredients[field_builder.index].ingredient.name, list: "ingredients_autocomplete")'],
+          ['td', 'field_builder.text_field(:ingredient, name: "recipe[recipe_ingredients_attributes][#{field_builder.index}][ingredient_upc]", value: model.recipe_ingredients[field_builder.index].ingredient.upc)']
+        ]
+      ]
+    }
+  }
+}) %>

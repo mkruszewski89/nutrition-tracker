@@ -5,7 +5,7 @@ Ingredient.destroy_all
 Recipe.destroy_all
 
 #users
-site_admin = User.create(name: "Site Administrator", email: "admin@nutritiontracker.com", password: 'p@ssw0rd', role: 1, birthday: '06/22/1989', gender: 'male')
+site_admin = User.create(name: "Site Administrator", email: "admin@nutritiontracker.com", password: 'p@ssw0rd', role: 1, birthday: DateTime.new(1989, 6, 22), gender: 'M')
 
 #units
 Unit.create(physical_property: 'volume', lowest_unit: 'milliliter', lowest_unit_equivalence: 1.000000, name: 'milliliter', abbreviation: 'ml')

@@ -1,0 +1,62 @@
+<%= form_for model, url: url, method: method do |form_builder| %>
+
+  <% if model.errors.any? %>
+    <%= render(partial: 'application/form_generator/form_errors', locals: {errors: model.errors}) %>
+  <% end %>
+
+  <% data.each do |section, attributes| %>
+
+    <% if attributes[:label] %>
+      <h2><%= attributes[:label] %></h2>
+    <% end %>
+
+    <table id="<%=attributes[:for].to_s.downcase%>-table">
+      <% if attributes[:headers] %>
+        <% attributes[:headers].each do |header| %>
+          <th><%= header %></th>
+        <% end %>
+      <% end %>
+
+      <% if attributes[:for] == model %>
+
+        <% attributes[:section_data].each do |data_row| %>
+          <tr><% data_row.each do |data_cell| %>
+            <%= "<#{data_cell[0]}>".html_safe %>
+            <%= eval(data_cell[1]) %>
+            <%= "</#{data_cell[0]}>".html_safe %>
+          <% end %></tr>
+        <% end %>
+
+      <% else %>
+
+        <%= form_builder.fields_for attributes[:for] do |field_builder| %>
+          <% attributes[:section_data].each do |data_row| %>
+            <tr id="<%=attributes[:for].to_s.downcase%>-table-row-<%=field_builder.index%>">
+              <% data_row.each do |data_cell| %>
+                <%= "<#{data_cell[0]}>".html_safe %>
+                <%= eval(data_cell[1]) %>
+                <%= "</#{data_cell[0]}>".html_safe %>
+              <% end %>
+
+              <script type='text/javascript'>
+                var table = document.getElementById("<%=attributes[:for].to_s.downcase%>-table");
+                var row = document.getElementById("<%=attributes[:for].to_s.downcase%>-table-row-<%=field_builder.index%>");
+                var row_index = <%=field_builder.index%>;
+                add_form_field_remove_button(table, row, row_index);
+              </script>
+            </tr>
+          <% end %>
+        <% end %>
+
+      <% end %>
+    </table>
+
+  <% end %>
+
+  <br>
+  <input type="button" value="Add Field" onclick="add_form_field();">
+
+  <br><br>
+  <%= form_builder.submit "Submit" %>
+
+<% end %>
