@@ -2,6 +2,8 @@
 
 <%= render(partial: 'nav_links', locals: {user: current_user}) %>
 
+<br><br>
+
   <% headers = ["Macronutrients"] %>
   <% data = collect_user_target_progress_for_table_display(@user, 'macronutrient') %>
   <%= render(partial: 'application/table_view_generator/table_generator',

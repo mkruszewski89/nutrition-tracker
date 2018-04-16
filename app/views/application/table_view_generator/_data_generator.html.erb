@@ -8,9 +8,11 @@
 <% when "raw single" %>
   <td><%= datum[1] %></td>
 <% when "link multiple start" %>
-  <td><%= link_to(datum[1], datum[2]) %>
+  <td><%= link_to(datum[1], datum[2], method: datum[3]) %>
+<% when "link multiple end" %>
+  <br><%= link_to(datum[1], datum[2], method: datum[3]) %></td>
 <% when "link single" %>
-  <td><%= link_to(datum[1], datum[2]) %></td>
+  <td><%= link_to(datum[1], datum[2], method: datum[3]) %></td>
 <% when "new_row" %>
   </tr><tr>
 <% end %>

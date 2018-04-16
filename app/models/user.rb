@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :recipes, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :food_logs, dependent: :destroy
   has_secure_password
   enum role: [:normal, :admin]
 

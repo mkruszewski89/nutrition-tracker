@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     get '/favorite-recipes', to: 'users#favorite_recipes', as: 'user_favorite_recipes'
   end
 
-  post '/:user_id/:recipe_id/toggle-favorite-recipe', to: 'recipes#toggle_favorite', as: 'toggle_favorite_recipe'
+  post '/:user_id/:recipe_id/favorites', to: 'recipes#toggle_favorite', as: 'toggle_favorite_recipe'
+  post '/:user_id/:food_log_id/food-log', to: 'recipes#create_log', as: 'create_recipe_log'
+  delete '/:user_id/:food_log_id/food-log', to: 'recipes#destroy_log', as: 'delete_recipe_log'
 
 end

@@ -60,6 +60,19 @@ class RecipesController < ApplicationController
     redirect_to recipe_ingredients_path(@recipe)
   end
 
+  def create_log
+    @user = User.find(params[:user_id])
+    @recipe = Recipe.find(params[:recipe_id])
+    FoodLog.create(user: @user, recipe: @recipe, date: DateTime.now)
+    redirect_to recipe_ingredients_path(@recipe)
+  end
+
+  def destroy_log
+    @user = User.find(params[:user_id])
+    FoodLog.find(params[:food_log_id]).destroy
+    redirect_to user_food_log_path(@user)
+  end
+
   private
 
   def recipe_params

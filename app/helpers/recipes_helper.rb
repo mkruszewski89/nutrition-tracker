@@ -37,7 +37,7 @@ module RecipesHelper
     data = []
     if recipes[0]
       recipes.each {|recipe|
-        data << ["link multiple start", recipe.name, "/#{recipe.id}/ingredients"]
+        data << ["link multiple start", recipe.name, "/#{recipe.id}/ingredients", :get]
         data << ["raw multiple continue", "by: #{recipe.user.name}"]
         data << ["raw multiple end", "cals: #{recipe.nutrient_amount('calorie').round(0)}"]
         data << ["raw single", "Images coming soon"]

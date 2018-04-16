@@ -1,3 +1,10 @@
 <h1>Food Log</h1>
 
 <%= render(partial: 'nav_links', locals: {user: current_user}) %>
+
+<br><br>
+
+<% headers = nil %>
+<% data = collect_food_logs_for_table_display(@user) %>
+<%= render(partial: 'application/table_view_generator/table_generator',
+locals: {headers: headers, data: data}) %>
