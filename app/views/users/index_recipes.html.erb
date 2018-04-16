@@ -1,8 +1,0 @@
-<h1>My Recipes</h1>
-
-<%= render(partial: 'recipes/nav_links', locals: {user: current_user}) %>
-
-<% headers = ["My Recipes"] %>
-<% data = collect_user_recipes_for_table_display(@user) %>
-<%= render(partial: 'application/table_view_generator/table_generator',
-locals: {headers: headers, data: data}) %>

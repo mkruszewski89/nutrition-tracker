@@ -1,6 +1,4 @@
-<h1><%= @recipe.name %></h1>
-
-<%= link_to("Edit Recipe", edit_recipe_path(current_user, @recipe)) %>
+<%= render(partial: 'recipe_nav_links', locals: {recipe: @recipe, user: @user}) %>
 
 <h2>Nutrition</h2>
 
@@ -16,12 +14,5 @@
 
   <% headers = ["Minerals"] %>
   <% data = collect_recipe_nutrients_for_table_display(@recipe, 'mineral') %>
-  <%= render(partial: 'application/table_view_generator/table_generator',
-  locals: {headers: headers, data: data}) %>
-
-<h2>What You'll Need</h2>
-
-  <% headers = ["Amount", "Unit", "Ingredients"] %>
-  <% data = collect_recipe_ingredients_for_table_display(@recipe) %>
   <%= render(partial: 'application/table_view_generator/table_generator',
   locals: {headers: headers, data: data}) %>

@@ -28,9 +28,10 @@ module RecipesHelper
   def collect_recipes_for_table_display(recipes)
     data = []
     recipes.each {|recipe|
-      data << ["link multiple start", recipe.name, "/users/#{recipe.user.id}/recipes/#{recipe.id}"]
+      data << ["link multiple start", recipe.name, "/#{recipe.id}/ingredients"]
       data << ["raw multiple continue", "by: #{recipe.user.name}"]
       data << ["raw multiple end", "cals: #{recipe.nutrient_amount('calorie').round(0)}"]
+      data << ["raw single", "Images coming soon"]
       data << ["new_row"] unless recipe == recipes.last
     }
     data

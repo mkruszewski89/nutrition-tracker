@@ -1,4 +1,6 @@
-<h1>Edit <%= @recipe.name %></h1>
+<%= render(partial: 'recipe_nav_links', locals: {recipe: @recipe, user: @user}) %>
+
+<h2>Edit</h2>
 
 <%= render(partial: 'cu_form',
 locals: {

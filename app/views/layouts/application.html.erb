@@ -14,8 +14,12 @@
     </datalist>
 
     <nav>
-      <%= link_to("Home", user_path(current_user)) %>
       <%= link_to("Recipes", recipes_path) %>
+      <% if current_user %>
+        <%= link_to("Stats", user_progress_path(current_user)) %>
+      <% else %>
+        <%= link_to("Log In", users_authentication_path) %>
+      <% end %>
     </nav>
   </head>
 

@@ -1,0 +1,7 @@
+<h1><%= recipe.name %></h1>
+<%= link_to("Ingredients", recipe_ingredients_path(recipe)) %>
+<%= link_to("Instructions", recipe_instructions_path(recipe)) %>
+<%= link_to("Nutrition", recipe_nutrition_path(recipe)) %>
+<% if user == current_user || current_user.admin? %>
+<%= link_to("Edit", edit_recipe_path(recipe)) %>
+<% end %>

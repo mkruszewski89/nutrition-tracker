@@ -1,40 +1,53 @@
 class RecipesController < ApplicationController
 
-  def index
+  def all_recipes
+    @user = current_user
     @recipes = Recipe.all
   end
 
-  def new
+  def new_full
     @user = current_user
     @recipe = Recipe.new
   end
 
-  def new_action
-    @user = User.find(params[:id])
+  def new_full_action
+    @user = current_user
     @recipe = Recipe.new(recipe_params)
     @user.recipes << @recipe
     if @recipe.save
       @recipe.build_recipe_nutrients
-      redirect_to recipe_path(@user, @recipe)
+      redirect_to recipe_path(@recipe)
     else
       render :new
     end
   end
 
-  def show
+  def show_ingredients
+    @user = current_user
+    @recipe = Recipe.find(params[:recipe_id])
+  end
+
+  def show_instructions
+    @user = current_user
+    @recipe = Recipe.find(params[:recipe_id])
+  end
+
+  def show_nutrition
+    @user = current_user
     @recipe = Recipe.find(params[:recipe_id])
   end
 
   def edit
+    @user = current_user
     @recipe = Recipe.find(params[:recipe_id])
   end
 
   def edit_action
-    @user = User.find(params[:id])
+    @user = current_user
     @recipe = Recipe.find(params[:recipe_id])
     if @recipe.update(recipe_params)
       @recipe.build_recipe_nutrients
-      redirect_to recipe_path(@user, @recipe)
+      redirect_to recipe_path(@recipe)
     else
       render :new
     end
