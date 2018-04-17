@@ -11,7 +11,7 @@
   <% data.each do |section, attributes| %>
 
     <% if attributes[:label] %>
-      <h2><%= attributes[:label] %></h2>
+      <h3><%= attributes[:label] %></h3>
     <% end %>
 
     <table id="<%=attributes[:for].to_s.downcase%>-table">
@@ -32,7 +32,7 @@
         <% end %>
 
       <% else %>
-      
+
         <%= form_builder.fields_for attributes[:for] do |field_builder| %>
           <% attributes[:section_data].each do |data_row| %>
             <tr id="<%=attributes[:for].to_s.downcase%>-table-row-<%=field_builder.index%>">

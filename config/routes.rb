@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     get '/nutrition', to: 'recipes#nutrition', as: 'recipe_nutrition'
     get '/edit', to: 'recipes#edit_full', as: 'edit_recipe_full'
     patch '/edit', to: 'recipes#update_full', as: 'update_recipe_full'
+    delete '/edit', to: 'recipes#destroy_full', as: 'destroy_recipe_full'
   end
 
   scope '/users' do

@@ -7,6 +7,8 @@ locals: {
 
 <h2>Edit</h2>
 
+<%= link_to("Delete #{@recipe.name}", destroy_recipe_full_path(@recipe), method: :delete, data: {confirm: "Deleted recipes cannot be restored. Are you sure? DEV NOTE: FOOD LOGS?"}) %>
+
 <%= render(
 partial: 'recipes/partials/forms/cu_recipe_full',
 locals: {

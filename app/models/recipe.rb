@@ -5,7 +5,7 @@ class Recipe < ApplicationRecord
   has_many :ingredients, through: :recipe_ingredients
   has_many :recipe_nutrients, dependent: :destroy
   has_many :nutrients, through: :recipe_nutrients
-  has_many :favorites
+  has_many :favorites, dependent: :destroy
   has_many :food_logs
   belongs_to :user
   accepts_nested_attributes_for :recipe_ingredients
