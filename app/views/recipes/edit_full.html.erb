@@ -1,0 +1,16 @@
+<%= render(
+partial: 'recipes/partials/controls/recipe',
+locals: {
+  recipe: @recipe,
+  user: @user
+}) %>
+
+<h2>Edit</h2>
+
+<%= render(
+partial: 'recipes/partials/forms/cu_recipe_full',
+locals: {
+  model: @recipe,
+  url: edit_recipe_full_path(@recipe),
+  method: :patch
+}) %>

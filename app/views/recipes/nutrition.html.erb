@@ -1,15 +1,14 @@
-<h1>Progress to Targets</h1>
-
 <%= render(
-partial: 'users/partials/controls/user',
+partial: 'recipes/partials/controls/recipe',
 locals: {
-  user: current_user
+  recipe: @recipe,
+  user: @user
 }) %>
 
-<br><br>
+<h2>Nutrition</h2>
 
 <% headers = ["Macronutrients"] %>
-<% data = collect_user_target_progress_for_table_display(@user, 'macronutrient') %>
+<% data = collect_recipe_nutrients_for_table_display(@recipe, 'macronutrient') %>
 <%= render(
 partial: 'application/partials/table_view_generator/table',
 locals: {
@@ -18,7 +17,7 @@ locals: {
 }) %>
 
 <% headers = ["Vitamins"] %>
-<% data = collect_user_target_progress_for_table_display(@user, 'vitamin') %>
+<% data = collect_recipe_nutrients_for_table_display(@recipe, 'vitamin') %>
 <%= render(
 partial: 'application/partials/table_view_generator/table',
 locals: {
@@ -27,7 +26,7 @@ locals: {
 }) %>
 
 <% headers = ["Minerals"] %>
-<% data = collect_user_target_progress_for_table_display(@user, 'mineral') %>
+<% data = collect_recipe_nutrients_for_table_display(@recipe, 'mineral') %>
 <%= render(
 partial: 'application/partials/table_view_generator/table',
 locals: {

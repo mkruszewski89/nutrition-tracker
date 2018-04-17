@@ -1,10 +1,15 @@
 <h1>New Recipe</h1>
 
-<%= render(partial: 'recipes_nav_links', locals: {user: current_user}) %>
+<%= render(
+partial: 'recipes/partials/controls/recipes',
+locals: {
+  user: current_user
+}) %>
 
-<%= render(partial: 'cu_form',
+<%= render(
+partial: 'recipes/partials/forms/cu_recipe_full',
 locals: {
   model: @recipe,
-  url: new_recipe_path(@user),
+  url: new_recipe_full_path(),
   method: :post
 }) %>

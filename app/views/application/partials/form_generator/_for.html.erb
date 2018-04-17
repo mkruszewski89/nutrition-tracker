@@ -1,7 +1,11 @@
 <%= form_for model, url: url, method: method do |form_builder| %>
 
   <% if model.errors.any? %>
-    <%= render(partial: 'application/form_generator/form_errors', locals: {errors: model.errors}) %>
+    <%= render(
+    partial: 'application/partials/form_generator/errors',
+    locals: {
+      errors: model.errors
+    }) %>
   <% end %>
 
   <% data.each do |section, attributes| %>
@@ -28,7 +32,7 @@
         <% end %>
 
       <% else %>
-
+      
         <%= form_builder.fields_for attributes[:for] do |field_builder| %>
           <% attributes[:section_data].each do |data_row| %>
             <tr id="<%=attributes[:for].to_s.downcase%>-table-row-<%=field_builder.index%>">

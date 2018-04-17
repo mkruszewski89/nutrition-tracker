@@ -2,13 +2,13 @@
 
   <% if headers %>
   <tr>
-    <%= render(partial: 'application/table_view_generator/headers_generator',
+    <%= render(partial: 'application/partials/table_view_generator/headers',
       collection: headers, as: :header) %>
   </tr>
   <% end %>
 
   <tr>
-    <%= render(partial: 'application/table_view_generator/data_generator',
+    <%= render(partial: 'application/partials/table_view_generator/data',
       collection: data, as: :datum) %>
   </tr>
 </table>

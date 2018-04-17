@@ -76,7 +76,8 @@
 
 </head>
 
-<%= render(partial: 'application/form_generator/form_for',
+<%= render(
+partial: 'application/form_generator/form_for',
 locals: {
   model: model,
   url: url,
@@ -85,6 +86,7 @@ locals: {
     section_1: {
       for: model,
       label: 'Name',
+      headers: nil,
       section_data: [
         [
           ['td', 'form_builder.text_field(:name)']
@@ -95,7 +97,6 @@ locals: {
       for: :recipe_ingredients,
       label: 'Ingredients',
       headers: ['Amount', 'Unit', 'Find Ingredient By Name', 'Or Create Ingredient From UPC'],
-      dynamic_add_remove: true,
       section_data: [
         [
           ['td', 'field_builder.text_field(:amount_in_recipe)'],

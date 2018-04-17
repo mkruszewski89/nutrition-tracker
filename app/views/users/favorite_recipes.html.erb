@@ -1,10 +1,18 @@
 <h1>Favorite Recipes</h1>
 
-<%= render(partial: 'recipes/recipes_nav_links', locals: {user: current_user}) %>
+<%= render(
+partial: 'recipes/partials/controls/recipes',
+locals: {
+  user: current_user
+}) %>
 
 <br><br>Search coming soon<br><br>
 
 <% headers = nil %>
 <% data = collect_recipes_for_table_display(@user.favorites.collect{|f| f.recipe}) %>
-<%= render(partial: 'application/table_view_generator/table_generator',
-locals: {headers: headers, data: data}) %>
+<%= render(
+partial: 'application/partials/table_view_generator/table',
+locals: {
+  headers: headers,
+  data: data
+}) %>

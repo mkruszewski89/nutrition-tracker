@@ -1,8 +1,0 @@
-<%= render(partial: 'recipe_nav_links', locals: {recipe: @recipe, user: @user}) %>
-
-<h2>Ingredients</h2>
-
-  <% headers = ["Amount", "Unit", "Ingredients"] %>
-  <% data = collect_recipe_ingredients_for_table_display(@recipe) %>
-  <%= render(partial: 'application/table_view_generator/table_generator',
-  locals: {headers: headers, data: data}) %>

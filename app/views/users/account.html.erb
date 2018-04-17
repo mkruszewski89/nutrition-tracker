@@ -1,3 +1,7 @@
 <h1>My Account</h1>
 
-<%= render(partial: 'nav_links', locals: {user: current_user}) %>
+<%= render(
+partial: 'users/partials/controls/user',
+locals: {
+  user: current_user
+}) %>
