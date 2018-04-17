@@ -1,19 +1,33 @@
 module UsersHelper
 
-  def collect_user_target_progress_for_table_display(user, nutrient_type)
+  def collect_user_progress_for_table_display(user, nutrient_type, days=0)
     data = []
-    user.recommended_nutrients.each {|recommendation_hash|
-      recommendation_hash.each {|nutrient, recommendation|
-        if Nutrient.find_by(name: nutrient).nutrient_type == nutrient_type
-          data << ['raw single', nutrient]
-          data << ['raw single', 'daily progress']
-          data << ['raw single', ' / ']
-          data << ['raw single', recommendation[0].round(0)]
-          data << ['raw single', recommendation[1]]
-          data << ['raw single', recommendation[2]] if recommendation[2] == 'limit'
-          data << ['new_row'] unless recommendation_hash == user.recommended_nutrients.last
-        end
-      }
+    user.nutrition_plan_recommendations.each{|nutrient_array|
+      nutrient = Nutrient.find_by(name: nutrient_array[0])
+      if nutrient.nutrient_type == nutrient_type
+        data << ['raw single', nutrient_array[0]]
+        nutrient_type == 'macronutrient' ? data << ['raw single', user.nutrient_consumption(nutrient.name, days).to_i] : data << ['raw single', user.nutrient_consumption(nutrient.name, days).to_f.round(1)]
+        data << ['raw single', ' / ']
+        nutrient_type == 'macronutrient' ? data << ['raw single', nutrient_array[2].to_i] : data << ['raw single', nutrient_array[2].to_f.round(1)]
+        data << ['raw single', nutrient.usda_unit]
+        data << ['raw single', nutrient_array[1]] if nutrient_array[1] == "ul"
+        data << ['new_row'] unless nutrient_array == user.nutrition_plan_recommendations.last
+      end
+    }
+    data
+  end
+
+  def collect_user_nutrition_plan_targets_for_table_display(user, nutrient_type, time_frame=1)
+    data = []
+    user.nutrition_plan_recommendations.each{|nutrient_array|
+      nutrient = Nutrient.find_by(name: nutrient_array[0])
+      if nutrient.nutrient_type == nutrient_type
+        data << ['raw single', nutrient_array[0]]
+        nutrient_type == 'macronutrient' ? data << ['raw single', nutrient_array[2].to_i] : data << ['raw single', nutrient_array[2].to_f.round(1)]
+        data << ['raw single', nutrient.usda_unit]
+        data << ['raw single', nutrient_array[1]]
+        data << ['new_row'] unless nutrient_array == user.nutrition_plan_recommendations.last
+      end
     }
     data
   end

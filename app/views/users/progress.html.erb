@@ -6,10 +6,10 @@ locals: {
   user: current_user
 }) %>
 
-<br><br>
+<br><br>date and timeframe toggles coming soon!<br><br>
 
 <% headers = ["Macronutrients"] %>
-<% data = collect_user_target_progress_for_table_display(@user, 'macronutrient') %>
+<% data = collect_user_progress_for_table_display(@user, 'macronutrient') %>
 <%= render(
 partial: 'application/partials/table_view_generator/table',
 locals: {
@@ -18,7 +18,7 @@ locals: {
 }) %>
 
 <% headers = ["Vitamins"] %>
-<% data = collect_user_target_progress_for_table_display(@user, 'vitamin') %>
+<% data = collect_user_progress_for_table_display(@user, 'vitamin') %>
 <%= render(
 partial: 'application/partials/table_view_generator/table',
 locals: {
@@ -27,7 +27,7 @@ locals: {
 }) %>
 
 <% headers = ["Minerals"] %>
-<% data = collect_user_target_progress_for_table_display(@user, 'mineral') %>
+<% data = collect_user_progress_for_table_display(@user, 'mineral') %>
 <%= render(
 partial: 'application/partials/table_view_generator/table',
 locals: {

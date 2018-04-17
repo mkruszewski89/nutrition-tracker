@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180416204320) do
+ActiveRecord::Schema.define(version: 20180417173552) do
 
   create_table "favorites", force: :cascade do |t|
     t.integer "user_id"
@@ -50,20 +50,18 @@ ActiveRecord::Schema.define(version: 20180416204320) do
     t.string "usda_name", default: ""
     t.string "nutrient_type", default: ""
     t.string "usda_unit", default: ""
-    t.string "recommendation_type", default: ""
-    t.float "recommendation_amount_I", default: 0.0
-    t.float "recommendation_amount_FC", default: 0.0
-    t.float "recommendation_amount_MC", default: 0.0
-    t.float "recommendation_amount_FP", default: 0.0
-    t.float "recommendation_amount_MP", default: 0.0
-    t.float "recommendation_amount_FT", default: 0.0
-    t.float "recommendation_amount_MT", default: 0.0
-    t.float "recommendation_amount_FY", default: 0.0
-    t.float "recommendation_amount_MY", default: 0.0
-    t.float "recommendation_amount_FA", default: 0.0
-    t.float "recommendation_amount_MA", default: 0.0
-    t.float "recommendation_amount_FE", default: 0.0
-    t.float "recommendation_amount_ME", default: 0.0
+  end
+
+  create_table "nutrition_plans", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "buckets"
+    t.string "nutrients"
+    t.string "recommendation_type"
+    t.string "amounts"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "bucket_by"
   end
 
   create_table "recipe_ingredients", force: :cascade do |t|
@@ -109,6 +107,7 @@ ActiveRecord::Schema.define(version: 20180416204320) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role", default: 0
+    t.integer "nutrition_plan_id"
   end
 
 end

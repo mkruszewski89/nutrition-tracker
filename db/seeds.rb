@@ -3,9 +3,7 @@ Unit.destroy_all
 Nutrient.destroy_all
 Ingredient.destroy_all
 Recipe.destroy_all
-
-#users
-site_admin = User.create(name: "Site Administrator", email: "admin@nutritiontracker.com", password: 'p@ssw0rd', role: 1, birthday: DateTime.new(1989, 6, 22), gender: 'M')
+NutritionPlan.destroy_all
 
 #units
 Unit.create(physical_property: 'volume', lowest_unit: 'milliliter', lowest_unit_equivalence: 1.000000, name: 'milliliter', abbreviation: 'ml')
@@ -25,64 +23,49 @@ Unit.create(physical_property: 'mass', lowest_unit: 'gram', lowest_unit_equivale
 Unit.create(physical_property: 'mass', lowest_unit: 'gram', lowest_unit_equivalence: 1000.000, name: 'kilogram', abbreviation: 'kg')
 
 #nutrients
-Nutrient.create(name: 'calorie',usda_name: "Energy",nutrient_type:'macronutrient',usda_unit:'kcal',recommendation_type:'need',recommendation_amount_I: 1000.0,recommendation_amount_FC: 1200.0,recommendation_amount_MC: 1500.0,recommendation_amount_FP:1600.0,recommendation_amount_MP: 1800.0,recommendation_amount_FT:1800.0,recommendation_amount_MT: 2200.0,recommendation_amount_FY: 2000.0,recommendation_amount_MY: 2400.0,recommendation_amount_FA: 1800.0,recommendation_amount_MA: 2200.0,recommendation_amount_FE: 1600.0,recommendation_amount_ME: 2000.0)
+Nutrient.create(name: 'calorie', usda_name: "Energy", nutrient_type: 'macronutrient', usda_unit: 'kcal')
+Nutrient.create(name: 'fat', usda_name: "Total lipid (fat)", nutrient_type: 'macronutrient', usda_unit: 'g')
+Nutrient.create(name: 'carbohydrate', usda_name: "Carbohydrate, by difference", nutrient_type: 'macronutrient', usda_unit: 'g')
+Nutrient.create(name: 'protein', usda_name: "Protein", nutrient_type: 'macronutrient', usda_unit: 'g')
+Nutrient.create(name: 'fiber', usda_name: "Fiber, total dietary", nutrient_type: 'macronutrient', usda_unit: 'g')
+Nutrient.create(name: 'sugar', usda_name: "Sugars, total", nutrient_type: 'macronutrient', usda_unit: 'g')
+Nutrient.create(name: 'saturated fat', usda_name: "Fatty acids, total saturated", nutrient_type: 'macronutrient', usda_unit: 'g')
+Nutrient.create(name: 'cholesterol', usda_name: "Cholesterol", nutrient_type: 'macronutrient', usda_unit: 'mg')
+Nutrient.create(name: 'calcium', usda_name: "Calcium, Ca", nutrient_type: 'mineral', usda_unit: 'mg')
+Nutrient.create(name: 'iron', usda_name: "Iron, Fe", nutrient_type: 'mineral', usda_unit: 'mg')
+Nutrient.create(name: 'magnesium', usda_name: "Magnesium, Mg", nutrient_type: 'mineral', usda_unit: 'mg')
+Nutrient.create(name: 'phosphorus', usda_name: "Phosphorus, P", nutrient_type: 'mineral', usda_unit: 'mg')
+Nutrient.create(name: 'potassium', usda_name: "Potassium, K", nutrient_type: 'mineral', usda_unit: 'mg')
+Nutrient.create(name: 'sodium', usda_name: "Sodium, Na", nutrient_type: 'mineral', usda_unit: 'mg')
+Nutrient.create(name: 'zinc', usda_name: "Zinc, Zn", nutrient_type: 'mineral', usda_unit: 'mg')
+Nutrient.create(name: 'copper', usda_name: "Copper, Cu", nutrient_type: 'mineral', usda_unit: 'mg')
+Nutrient.create(name: 'manganese', usda_name: "Manganese, Mn", nutrient_type: 'mineral', usda_unit: 'mg')
+Nutrient.create(name: 'selenium', usda_name: "Selenium, Se", nutrient_type: 'mineral', usda_unit: 'µg')
+Nutrient.create(name: 'vitamin a', usda_name: "Vitamin A, RAE", nutrient_type: 'vitamin', usda_unit: 'µg')
+Nutrient.create(name: 'vitamin e', usda_name: "Vitamin E (alpha-tocopherol)", nutrient_type: 'vitamin', usda_unit: 'mg')
+Nutrient.create(name: 'vitamin c', usda_name: "Vitamin C, total ascorbic acid", nutrient_type: 'vitamin', usda_unit: 'mg')
+Nutrient.create(name: 'thiamin', usda_name: "Thiamin", nutrient_type: 'vitamin', usda_unit: 'mg')
+Nutrient.create(name: 'riboflavin', usda_name: "Riboflavin", nutrient_type: 'vitamin', usda_unit: 'mg')
+Nutrient.create(name: 'niacin', usda_name: "Niacin", nutrient_type: 'vitamin', usda_unit: 'mg')
+Nutrient.create(name: 'vitamin b6', usda_name: "Vitamin B-6", nutrient_type: 'vitamin', usda_unit: 'mg')
+Nutrient.create(name: 'vitamin b12', usda_name: "Vitamin B-12", nutrient_type: 'vitamin', usda_unit: 'µg')
+Nutrient.create(name: 'choline', usda_name: "Choline, total", nutrient_type: 'vitamin', usda_unit: 'mg')
+Nutrient.create(name: 'vitamin k', usda_name: "Vitamin K (phylloquinone)", nutrient_type: 'vitamin', usda_unit: 'µg')
+Nutrient.create(name: 'folate', usda_name: "Folate, total", nutrient_type: 'vitamin', usda_unit: 'µg')
 
-Nutrient.create(name: 'fat',usda_name: "Total lipid (fat)",nutrient_type:'macronutrient',usda_unit:'g',recommendation_type:'need',recommendation_amount_I: 38.0,recommendation_amount_FC: 40.000,recommendation_amount_MC: 50.0,recommendation_amount_FP:53.000,recommendation_amount_MP: 60.000,recommendation_amount_FT:60.000,recommendation_amount_MT: 73.000,recommendation_amount_FY: 61.000,recommendation_amount_MY: 73.000,recommendation_amount_FA: 55.000,recommendation_amount_MA: 67.000,recommendation_amount_FE: 48.000,recommendation_amount_ME: 61.000)
+#nutrition plans
+NutritionPlan.create(
+  name: "USDA Dietary Guidelines",
+  description: "Reflects the current body of nutrition science and serves as the foundation for nutrition policies and programs across the United States.",
+  bucket_by: "gender|age",
+  buckets: "female;0..3|male;0..3|female;4..8|male;4..8|female;9..13|male;9..13|female;14..18|male;14..18|female;19..30|male;19..30|female;31..50|male;31..50|female;51..200|male;51..200",
+  nutrients: "calorie|fat|carbohydrate|protein|fiber|sugar|saturated fat|cholesterol|calcium|iron|magnesium|phosphorus|potassium|sodium|zinc|copper|manganese|selenium|vitamin a|vitamin e|vitamin c|thiamin|riboflavin|niacin|vitamin b6|vitamin b12|choline|vitamin k|folate",
+  recommendation_type: "ul|rda|rda|rda|rda|ul|ul|ul|rda|rda|rda|rda|rda|ul|rda|rda|rda|rda|rda|rda|rda|rda|rda|rda|rda|rda|rda|rda|rda",
+  amounts: "1000.0;38.000;130.00;13.000;14.000;25.000;11.000;300.00;700.00;7.0000;80.000;460.00;3000.0;1500.0;3.0000;0.3400;1.2000;20.000;300.00;6.0000;15.000;0.5000;0.5000;6.0000;0.5000;0.9000;200.00;30.000;150.00|1000.0;38.000;130.00;13.000;14.000;25.000;11.000;300.00;700.00;7.0000;80.000;460.00;3000.0;1500.0;3.0000;0.3400;1.2000;20.000;300.00;6.0000;15.000;0.5000;0.5000;6.0000;0.5000;0.9000;200.00;30.000;150.00|1200.0;40.000;130.00;19.000;16.800;30.000;13.000;300.00;1000.0;10.000;130.00;500.0,;3800.0;1900.0;5.0000;0.4400;1.5000;30.000;400.00;7.0000;25.000;0.6000;0.6000;8.0000;0.6000;1.2000;250.00;55.000;200.00|1500.0;50.000;130.00;19.000;19.600;37.000;16.000;300.00;1000.0;10.000;130.00;500.00;3800.0;1900.0;5.0000;0.4400;1.5000;30.000;400.00;7.0000;25.000;0.6000;0.6000;8.0000;0.6000;1.2000;250.00;55.000;200.00|1600.0;53.000;130.00;34.000;22.400;40.000;17.000;300.00;1300.0;8.0000;240.00;1250.0;4500.0;2200.0;8.0000;0.7000;1.6000;40.000;600.00;11.000;45.000;0.9000;0.9000;12.000;1.0000;1.8000;375.00;60.000;300.00|1800.0;60.000;130.00;34.000;25.200;45.000;20.000;300.00;1300.0;8.0000;240.00;1250.0;4500.0;2200.0;8.0000;0.7000;1.9000;40.000;600.00;11.000;45.000;0.9000;0.9000;12.000;1.0000;1.8000;375.00;60.000;300.00|1800.0;60.000;130.00;46.000;25.200;45.000;20.000;300.00;1300.0;15.000;360.00;1250.0;4700.0;2300.0;9.0000;0.8900;1.6000;55.000;700.00;15.000;65.000;1.0000;1.0000;14.000;1.2000;2.4000;400.00;75.000;400.00|2200.0;73.000;130.00;52.000;30.800;55.000;24.000;300.00;1300.0;11.000;410.00;1250.0;4700.0;2300.0;11.000;0.8900;2.2000;55.000;900.00;15.000;75.000;1.2000;1.3000;16.000;1.3000;2.4000;550.00;75.000;400.00|2000.0;61.000;130.00;46.000;28.000;50.000;22.000;300.00;1000.0;18.000;310.00;700.00;4700.0;2300.0;8.0000;0.9000;1.8000;55.000;700.00;15.000;75.000;1.1000;1.1000;14.000;1.3000;2.4000;425.00;90.000;400.00|2400.0;73.000;130.00;56.000;33.600;60.000;26.000;300.00;1000.0;8.0000;400.00;700.00;4700.0;2300.0;11.000;0.9000;2.3000;55.000;900.00;15.000;90.000;1.2000;1.3000;16.000;1.3000;2.4000;550.00;120.00;400.00|1800.0;55.000;130.00;46.000;25.200;45.000;20.000;300.00;1000.0;18.000;320.00;700.00;4700.0;2300.0;8.0000;0.9000;1.8000;55.000;700.00;15.000;75.000;1.1000;1.1000;14.000;1.3000;2.4000;425.00;90.000;400.00|2200.0;67.000;130.00;56.000;30.800;55.000;24.000;300.00;1000.0;8.0000;420.00;700.00;4700.0;2300.0;11.000;0.9000;2.3000;55.000;900.00;15.000;90.000;1.2000;1.3000;16.000;1.3000;2.4000;550.00;120.00;400.00|1600.0;48.000;130.00;46.000;22.400;40.000;17.000;300.00;1200.0;8.0000;320.00;700.00;4700.0;2300.0;8.0000;0.9000;1.8000;55.000;700.00;15.000;75.000;1.1000;1.1000;14.000;1.5000;2.4000;425.00;90.000;400.00|2000.0;61.000;130.00;56.000;28.000;50.000;22.000;300.00;1000.0;8.0000;420.00;700.00;4700.0;2300.0;11.000;0.9000;2.3000;55.000;900.00;15.000;90.000;1.2000;1.3000;16.000;1.7000;2.4000;550.00;120.00;400.00"
+)
 
-Nutrient.create(name: 'carbohydrate',usda_name: "Carbohydrate, by difference",nutrient_type:'macronutrient',usda_unit:'g',recommendation_type:'need',recommendation_amount_I: 130.0,recommendation_amount_FC: 130.00,recommendation_amount_MC: 130.0,recommendation_amount_FP:130.00,recommendation_amount_MP: 130.00,recommendation_amount_FT:130.00,recommendation_amount_MT: 130.00,recommendation_amount_FY: 130.00,recommendation_amount_MY: 130.00,recommendation_amount_FA: 130.00,recommendation_amount_MA: 130.00,recommendation_amount_FE: 130.00,recommendation_amount_ME: 130.00)
-
-Nutrient.create(name: 'protein',usda_name: "Protein",nutrient_type:'macronutrient',usda_unit:'g',recommendation_type:'need',recommendation_amount_I: 13.0,recommendation_amount_FC: 19.000,recommendation_amount_MC: 19.0,recommendation_amount_FP:34.000,recommendation_amount_MP: 34.000,recommendation_amount_FT:46.000,recommendation_amount_MT: 52.000,recommendation_amount_FY: 46.000,recommendation_amount_MY: 56.000,recommendation_amount_FA: 46.000,recommendation_amount_MA: 56.000,recommendation_amount_FE: 46.000,recommendation_amount_ME: 56.000)
-
-Nutrient.create(name: 'fiber',usda_name: "Fiber, total dietary",nutrient_type:'macronutrient',usda_unit:'g',recommendation_type:'need',recommendation_amount_I: 14.0,recommendation_amount_FC: 16.800,recommendation_amount_MC: 19.6,recommendation_amount_FP:22.400,recommendation_amount_MP: 25.200,recommendation_amount_FT:25.200,recommendation_amount_MT: 30.800,recommendation_amount_FY: 28.000,recommendation_amount_MY: 33.600,recommendation_amount_FA: 25.200,recommendation_amount_MA: 30.800,recommendation_amount_FE: 22.400,recommendation_amount_ME: 28.000)
-
-Nutrient.create(name: 'sugar',usda_name: "Sugars, total",nutrient_type:'macronutrient',usda_unit:'g',recommendation_type:'limit',recommendation_amount_I: 25.0,recommendation_amount_FC: 30.000,recommendation_amount_MC: 37.0,recommendation_amount_FP:40.000,recommendation_amount_MP: 45.000,recommendation_amount_FT:45.000,recommendation_amount_MT: 55.000,recommendation_amount_FY: 50.000,recommendation_amount_MY: 60.000,recommendation_amount_FA: 45.000,recommendation_amount_MA: 55.000,recommendation_amount_FE: 40.000,recommendation_amount_ME: 50.000)
-
-Nutrient.create(name: 'saturated fat',usda_name: "Fatty acids, total saturated",nutrient_type:'macronutrient',usda_unit:'g',recommendation_type:'limit',recommendation_amount_I: 11.0,recommendation_amount_FC: 13.000,recommendation_amount_MC: 16.0,recommendation_amount_FP:17.000,recommendation_amount_MP: 20.000,recommendation_amount_FT:20.000,recommendation_amount_MT: 24.000,recommendation_amount_FY: 22.000,recommendation_amount_MY: 26.000,recommendation_amount_FA: 20.000,recommendation_amount_MA: 24.000,recommendation_amount_FE: 17.000,recommendation_amount_ME: 22.000)
-
-Nutrient.create(name: 'cholesterol',usda_name: "Cholesterol",nutrient_type:'macronutrient',usda_unit:'mg',recommendation_type:'limit',recommendation_amount_I: 300.0,recommendation_amount_FC: 300.00,recommendation_amount_MC: 300.0,recommendation_amount_FP:300.00,recommendation_amount_MP: 300.00,recommendation_amount_FT:300.00,recommendation_amount_MT: 300.00,recommendation_amount_FY: 300.00,recommendation_amount_MY: 300.00,recommendation_amount_FA: 300.00,recommendation_amount_MA: 300.00,recommendation_amount_FE: 300.00,recommendation_amount_ME: 300.00)
-
-Nutrient.create(name: 'calcium',usda_name: "Calcium, Ca",nutrient_type:'mineral',usda_unit:'mg',recommendation_type:'need',recommendation_amount_I: 700.0,recommendation_amount_FC: 1000.0,recommendation_amount_MC: 1000.0,recommendation_amount_FP:1300.0,recommendation_amount_MP: 1300.0,recommendation_amount_FT:1300.0,recommendation_amount_MT: 1300.0,recommendation_amount_FY: 1000.0,recommendation_amount_MY: 1000.0,recommendation_amount_FA: 1000.0,recommendation_amount_MA: 1000.0,recommendation_amount_FE: 1200.0,recommendation_amount_ME: 1000.0)
-
-Nutrient.create(name: 'iron',usda_name: "Iron, Fe",nutrient_type:'mineral',usda_unit:'mg',recommendation_type:'need',recommendation_amount_I: 7.0,recommendation_amount_FC: 10.000,recommendation_amount_MC: 10.0,recommendation_amount_FP:8.0000,recommendation_amount_MP: 8.0000,recommendation_amount_FT:15.000,recommendation_amount_MT: 11.000,recommendation_amount_FY: 18.000,recommendation_amount_MY: 8.0000,recommendation_amount_FA: 18.000,recommendation_amount_MA: 8.0000,recommendation_amount_FE: 8.0000,recommendation_amount_ME: 8.0000)
-
-Nutrient.create(name: 'magnesium',usda_name: "Magnesium, Mg",nutrient_type:'mineral',usda_unit:'mg',recommendation_type:'need',recommendation_amount_I: 80.0,recommendation_amount_FC: 130.00,recommendation_amount_MC: 130.0,recommendation_amount_FP:240.00,recommendation_amount_MP: 240.00,recommendation_amount_FT:360.00,recommendation_amount_MT: 410.00,recommendation_amount_FY: 310.00,recommendation_amount_MY: 400.00,recommendation_amount_FA: 320.00,recommendation_amount_MA: 420.00,recommendation_amount_FE: 320.00,recommendation_amount_ME: 420.00)
-
-Nutrient.create(name: 'phosphorus',usda_name: "Phosphorus, P",nutrient_type:'mineral',usda_unit:'mg',recommendation_type:'need',recommendation_amount_I: 460.0,recommendation_amount_FC: 500.0,recommendation_amount_MC: 500.0,recommendation_amount_FP:1250.0,recommendation_amount_MP: 1250.0,recommendation_amount_FT:1250.0,recommendation_amount_MT: 1250.0,recommendation_amount_FY: 700.0,recommendation_amount_MY: 700.0,recommendation_amount_FA: 700.0,recommendation_amount_MA: 700.0,recommendation_amount_FE: 700.0,recommendation_amount_ME: 700.0)
-
-Nutrient.create(name: 'potassium',usda_name: "Potassium, K",nutrient_type:'mineral',usda_unit:'mg',recommendation_type:'need',recommendation_amount_I: 3000.0,recommendation_amount_FC: 3800.0,recommendation_amount_MC: 3800.0,recommendation_amount_FP:4500.0,recommendation_amount_MP: 4500.0,recommendation_amount_FT:4700.0,recommendation_amount_MT: 4700.0,recommendation_amount_FY: 4700.0,recommendation_amount_MY: 4700.0,recommendation_amount_FA: 4700.0,recommendation_amount_MA: 4700.0,recommendation_amount_FE: 4700.0,recommendation_amount_ME: 4700.0)
-
-Nutrient.create(name: 'sodium',usda_name: "Sodium, Na",nutrient_type:'mineral',usda_unit:'mg',recommendation_type:'limit',recommendation_amount_I: 1500.0,recommendation_amount_FC: 1900.0,recommendation_amount_MC: 1900.0,recommendation_amount_FP:2200.0,recommendation_amount_MP: 2200.0,recommendation_amount_FT:2300.0,recommendation_amount_MT: 2300.0,recommendation_amount_FY: 2300.0,recommendation_amount_MY: 2300.0,recommendation_amount_FA: 2300.0,recommendation_amount_MA: 2300.0,recommendation_amount_FE: 2300.0,recommendation_amount_ME: 2300.0)
-
-Nutrient.create(name: 'zinc',usda_name: "Zinc, Zn",nutrient_type:'mineral',usda_unit:'mg',recommendation_type:'need',recommendation_amount_I: 3.0,recommendation_amount_FC: 5.0000,recommendation_amount_MC: 5.0,recommendation_amount_FP:8.0000,recommendation_amount_MP: 8.0000,recommendation_amount_FT:9.0000,recommendation_amount_MT: 11.000,recommendation_amount_FY: 8.0000,recommendation_amount_MY: 11.000,recommendation_amount_FA: 8.0000,recommendation_amount_MA: 11.000,recommendation_amount_FE: 8.0000,recommendation_amount_ME: 11.000)
-
-Nutrient.create(name: 'copper',usda_name: "Copper, Cu",nutrient_type:'mineral',usda_unit:'mg',recommendation_type:'need',recommendation_amount_I: 0.3400,recommendation_amount_FC: 0.4400,recommendation_amount_MC: 0.4400,recommendation_amount_FP:0.7000,recommendation_amount_MP: 0.7000,recommendation_amount_FT:0.8900,recommendation_amount_MT: 0.8900,recommendation_amount_FY: 0.9000,recommendation_amount_MY: 0.9000,recommendation_amount_FA: 0.9000,recommendation_amount_MA:0.9000,recommendation_amount_FE: 0.9000,recommendation_amount_ME: 0.9000)
-
-Nutrient.create(name: 'manganese',usda_name: "Manganese, Mn",nutrient_type:'mineral',usda_unit:'mg',recommendation_type:'need',recommendation_amount_I: 1.2,recommendation_amount_FC: 1.5000,recommendation_amount_MC: 1.5,recommendation_amount_FP:1.6000,recommendation_amount_MP: 1.9000,recommendation_amount_FT:1.6000,recommendation_amount_MT: 2.2000,recommendation_amount_FY: 1.8000,recommendation_amount_MY: 2.3000,recommendation_amount_FA: 1.8000,recommendation_amount_MA: 2.3000,recommendation_amount_FE: 1.8000,recommendation_amount_ME: 2.3000)
-
-Nutrient.create(name: 'selenium',usda_name: "Selenium, Se",nutrient_type:'mineral',usda_unit:'µg',recommendation_type:'need',recommendation_amount_I: 20.0,recommendation_amount_FC: 30.000,recommendation_amount_MC: 30.0,recommendation_amount_FP:40.000,recommendation_amount_MP: 40.000,recommendation_amount_FT:55.000,recommendation_amount_MT: 55.000,recommendation_amount_FY: 55.000,recommendation_amount_MY: 55.000,recommendation_amount_FA: 55.000,recommendation_amount_MA: 55.000,recommendation_amount_FE: 55.000,recommendation_amount_ME: 55.000)
-
-Nutrient.create(name: 'vitamin a',usda_name: "Vitamin A, RAE",nutrient_type:'vitamin',usda_unit:'µg',recommendation_type:'need',recommendation_amount_I: 300.0,recommendation_amount_FC: 400.00,recommendation_amount_MC: 400.0,recommendation_amount_FP:600.00,recommendation_amount_MP: 600.00,recommendation_amount_FT:700.00,recommendation_amount_MT: 900.00,recommendation_amount_FY: 700.00,recommendation_amount_MY: 900.00,recommendation_amount_FA: 700.00,recommendation_amount_MA: 900.00,recommendation_amount_FE: 700.00,recommendation_amount_ME: 900.00)
-
-Nutrient.create(name: 'vitamin e',usda_name: "Vitamin E (alpha-tocopherol)",nutrient_type:'vitamin',usda_unit:'mg',recommendation_type:'need',recommendation_amount_I: 6.0,recommendation_amount_FC: 7.0000,recommendation_amount_MC: 7.0,recommendation_amount_FP:11.000,recommendation_amount_MP: 11.000,recommendation_amount_FT:15.000,recommendation_amount_MT: 15.000,recommendation_amount_FY: 15.000,recommendation_amount_MY: 15.000,recommendation_amount_FA: 15.000,recommendation_amount_MA: 15.000,recommendation_amount_FE: 15.000,recommendation_amount_ME: 15.000)
-
-Nutrient.create(name: 'vitamin c',usda_name: "Vitamin C, total ascorbic acid",nutrient_type:'vitamin',usda_unit:'mg',recommendation_type:'need',recommendation_amount_I: 15.0,recommendation_amount_FC: 25.000,recommendation_amount_MC: 25.0,recommendation_amount_FP:45.000,recommendation_amount_MP: 45.000,recommendation_amount_FT:65.000,recommendation_amount_MT: 75.000,recommendation_amount_FY: 75.000,recommendation_amount_MY: 90.000,recommendation_amount_FA: 75.000,recommendation_amount_MA: 90.000,recommendation_amount_FE: 75.000,recommendation_amount_ME: 90.000)
-
-Nutrient.create(name: 'thiamin',usda_name: "Thiamin",nutrient_type:'vitamin',usda_unit:'mg',recommendation_type:'need',recommendation_amount_I: 0.5,recommendation_amount_FC: 0.6000,recommendation_amount_MC: 0.6,recommendation_amount_FP:0.9000,recommendation_amount_MP: 0.9000,recommendation_amount_FT:1.0000,recommendation_amount_MT: 1.2000,recommendation_amount_FY: 1.1000,recommendation_amount_MY: 1.2000,recommendation_amount_FA: 1.1000,recommendation_amount_MA: 1.2000,recommendation_amount_FE: 1.1000,recommendation_amount_ME: 1.2000)
-
-Nutrient.create(name: 'riboflavin',usda_name: "Riboflavin",nutrient_type:'vitamin',usda_unit:'mg',recommendation_type:'need',recommendation_amount_I: 0.5,recommendation_amount_FC: 0.6000,recommendation_amount_MC: 0.6,recommendation_amount_FP:0.9000,recommendation_amount_MP: 0.9000,recommendation_amount_FT:1.0000,recommendation_amount_MT: 1.3000,recommendation_amount_FY: 1.1000,recommendation_amount_MY: 1.3000,recommendation_amount_FA: 1.1000,recommendation_amount_MA: 1.3000,recommendation_amount_FE: 1.1000,recommendation_amount_ME: 1.3000)
-
-Nutrient.create(name: 'niacin',usda_name: "Niacin",nutrient_type:'vitamin',usda_unit:'mg',recommendation_type:'need',recommendation_amount_I: 6.0,recommendation_amount_FC: 8.0000,recommendation_amount_MC: 8.0,recommendation_amount_FP:12.000,recommendation_amount_MP: 12.000,recommendation_amount_FT:14.000,recommendation_amount_MT: 16.000,recommendation_amount_FY: 14.000,recommendation_amount_MY: 16.000,recommendation_amount_FA: 14.000,recommendation_amount_MA: 16.000,recommendation_amount_FE: 14.000,recommendation_amount_ME: 16.000)
-
-Nutrient.create(name: 'vitamin b6',usda_name: "Vitamin B-6",nutrient_type:'vitamin',usda_unit:'mg',recommendation_type:'need',recommendation_amount_I: 0.5,recommendation_amount_FC: 0.6000,recommendation_amount_MC: 0.6,recommendation_amount_FP:1.0000,recommendation_amount_MP: 1.0000,recommendation_amount_FT:1.2000,recommendation_amount_MT: 1.3000,recommendation_amount_FY: 1.3000,recommendation_amount_MY: 1.3000,recommendation_amount_FA: 1.3000,recommendation_amount_MA: 1.3000,recommendation_amount_FE: 1.5000,recommendation_amount_ME: 1.7000)
-
-Nutrient.create(name: 'vitamin b12',usda_name: "Vitamin B-12",nutrient_type:'vitamin',usda_unit:'µg',recommendation_type:'need',recommendation_amount_I: 0.9,recommendation_amount_FC: 1.2000,recommendation_amount_MC: 1.2,recommendation_amount_FP:1.8000,recommendation_amount_MP: 1.8000,recommendation_amount_FT:2.4000,recommendation_amount_MT: 2.4000,recommendation_amount_FY: 2.4000,recommendation_amount_MY: 2.4000,recommendation_amount_FA: 2.4000,recommendation_amount_MA: 2.4000,recommendation_amount_FE: 2.4000,recommendation_amount_ME: 2.4000)
-
-Nutrient.create(name: 'choline',usda_name: "Choline, total",nutrient_type:'vitamin',usda_unit:'mg',recommendation_type:'need',recommendation_amount_I: 200.0,recommendation_amount_FC: 250.00,recommendation_amount_MC: 250.0,recommendation_amount_FP:375.00,recommendation_amount_MP: 375.00,recommendation_amount_FT:400.00,recommendation_amount_MT: 550.00,recommendation_amount_FY: 425.00,recommendation_amount_MY: 550.00,recommendation_amount_FA: 425.00,recommendation_amount_MA: 550.00,recommendation_amount_FE: 425.00,recommendation_amount_ME: 550.00)
-
-Nutrient.create(name: 'vitamin k',usda_name: "Vitamin K (phylloquinone)",nutrient_type:'vitamin',usda_unit:'µg',recommendation_type:'need',recommendation_amount_I: 30.0,recommendation_amount_FC: 55.000,recommendation_amount_MC: 55.0,recommendation_amount_FP:60.000,recommendation_amount_MP: 60.000,recommendation_amount_FT:75.000,recommendation_amount_MT: 75.000,recommendation_amount_FY: 90.000,recommendation_amount_MY: 120.00,recommendation_amount_FA: 90.000,recommendation_amount_MA: 120.00,recommendation_amount_FE: 90.000,recommendation_amount_ME: 120.00)
-
-Nutrient.create(name: 'folate',usda_name: "Folate, total",nutrient_type:'vitamin',usda_unit:'µg',recommendation_type:'need',recommendation_amount_I: 150.0,recommendation_amount_FC: 200.00,recommendation_amount_MC: 200.0,recommendation_amount_FP:300.00,recommendation_amount_MP: 300.00,recommendation_amount_FT:400.00,recommendation_amount_MT: 400.00,recommendation_amount_FY: 400.00,recommendation_amount_MY: 400.00,recommendation_amount_FA: 400.00,recommendation_amount_MA: 400.00,recommendation_amount_FE: 400.00,recommendation_amount_ME: 400.00)
-
+#users
+site_admin = User.create(name: "Site Administrator", email: "admin@nutritiontracker.com", password: 'p@ssw0rd', role: 1, birthday: DateTime.new(1989, 6, 22), gender: 'male', nutrition_plan: NutritionPlan.all[0])
 
 #ingredients
 ingredient = Ingredient.find_or_create_by_upc('077901421425')
@@ -117,7 +100,6 @@ ingredient.update(name: "Milk: Whole", density: 1.0310022372748548)
 
 #recipes
 recipe = Recipe.new(name: "Control Cookie", user: site_admin)
-
 recipe.recipe_ingredients.build(
   amount_in_recipe: 50,
   user_defined_unit: 'gram',
@@ -172,7 +154,6 @@ recipe.save
 recipe.build_recipe_nutrients
 
 recipe = Recipe.new(name: "Mass Cookie", user: site_admin)
-
 recipe.recipe_ingredients.build(
   amount_in_recipe: 50,
   user_defined_unit: 'gram',
@@ -227,7 +208,6 @@ recipe.save
 recipe.build_recipe_nutrients
 
 recipe = Recipe.new(name: "Volume Cookie", user: site_admin)
-
 recipe.recipe_ingredients.build(
   amount_in_recipe: 52.81,
   user_defined_unit: 'milliliter',

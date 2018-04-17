@@ -1,16 +1,34 @@
 class User < ApplicationRecord
+  belongs_to :nutrition_plan
   has_many :recipes, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :food_logs, dependent: :destroy
   has_secure_password
   enum role: [:normal, :admin]
 
-  def recommended_nutrients
-    nutrients = []
-    Nutrient.all.each {|nutrient|
-      nutrients << {"#{nutrient.name}": [nutrient.send("recommendation_amount_#{recommendation_category}"), nutrient.usda_unit, nutrient.recommendation_type]}
+  def nutrient_consumption(nutrient, days=0)
+    nutrient = Nutrient.find_by(name: nutrient)
+    logs = food_logs.collect{|log| log if log.date.to_date >= DateTime.now.to_date - days}.compact
+    i = 0
+    if !logs.empty?
+      logs.each {|log|
+        nutrient_amount_in_log = log.recipe.recipe_nutrients.find_by(nutrient: nutrient).try(:amount_in_recipe)
+        i += nutrient_amount_in_log if nutrient_amount_in_log
+      }
+    end
+    i
+  end
+
+  def nutrition_plan_recommendations
+    user_attributes = []
+    nutrition_plan.bucket_by.split("|").each {|user_attribute|
+      if user_attribute == 'age'
+        user_attributes << self.age_bracket
+      else
+        user_attributes << self.send(user_attribute.to_sym)
+      end
     }
-    nutrients
+    nutrition_plan.unpack_data[user_attributes.join(";")]
   end
 
   def age
@@ -18,24 +36,22 @@ class User < ApplicationRecord
     age = now.year - birthday.year - ((now.month > birthday.month || (now.month == birthday.month && now.day >= birthday.day)) ? 0 : 1)
   end
 
-  def recommendation_category
+  def age_bracket
     case age
     when 0..3
-      gender + 'I'
+      "0..3"
     when 4..8
-      gender + 'C'
+      "4..8"
     when 9..13
-      gender + 'P'
+      "9..13"
     when 14..18
-      gender + 'T'
+      "14..18"
     when 19..30
-      gender + 'Y'
-    when 31..50
-      gender + 'A'
-    when 51..200
-      gender + 'E'
+      "19..30"
+    when 31..51
+      "31..50"
     else
-      gender + 'A'
+      "51..200"
     end
   end
 

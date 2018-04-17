@@ -5,3 +5,36 @@ partial: 'users/partials/controls/user',
 locals: {
   user: current_user
 }) %>
+
+<br><br>
+
+Current Plan: <%= @user.nutrition_plan.name %><br><%= @user.nutrition_plan.description %>
+
+<br><br>
+
+<% headers = ["Macronutrients"] %>
+<% data = collect_user_nutrition_plan_targets_for_table_display(@user, 'macronutrient') %>
+<%= render(
+partial: 'application/partials/table_view_generator/table',
+locals: {
+  headers: headers,
+  data: data
+}) %>
+
+<% headers = ["Vitamins"] %>
+<% data = collect_user_nutrition_plan_targets_for_table_display(@user, 'vitamin') %>
+<%= render(
+partial: 'application/partials/table_view_generator/table',
+locals: {
+  headers: headers,
+  data: data
+}) %>
+
+<% headers = ["Minerals"] %>
+<% data = collect_user_nutrition_plan_targets_for_table_display(@user, 'mineral') %>
+<%= render(
+partial: 'application/partials/table_view_generator/table',
+locals: {
+  headers: headers,
+  data: data
+}) %>
