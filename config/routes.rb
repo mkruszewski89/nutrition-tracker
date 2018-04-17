@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   end
 
   post '/:user_id/:recipe_id/favorites', to: 'recipes#toggle_favorite', as: 'toggle_favorites_recipe'
-  post '/:user_id/:food_log_id/food-log', to: 'recipes#create_food_log', as: 'create_food_log_recipe'
-  delete '/:user_id/:food_log_id/food-log', to: 'recipes#destroy_food_log', as: 'delete_food_log_recipe'
+  post '/:user_id/:recipe_id/food-log', to: 'recipes#create_food_log', as: 'create_food_log_recipe'
+  delete '/:food_log_id/food-log', to: 'recipes#destroy_food_log', as: 'delete_food_log_recipe'
 
 end

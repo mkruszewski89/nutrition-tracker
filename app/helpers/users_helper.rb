@@ -24,7 +24,7 @@ module UsersHelper
       user.food_logs.each {|food_log|
         data << ["link multiple start", food_log.recipe.name, "recipe_ingredients_path(#{food_log.recipe.id})", :get]
         data << ["raw multiple continue", "logged: #{food_log.date.strftime("%m/%d/%Y")}"]
-        data << ['link multiple end', 'delete', "delete_food_log_recipe_path(#{food_log.user.id}, #{food_log.id})", :delete]
+        data << ['link multiple end', 'delete', "delete_food_log_recipe_path(#{food_log.id})", :delete]
         data << ['raw single', 'Images coming soon']
         data << ["new_row"] unless food_log == user.food_logs.last
       }
