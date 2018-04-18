@@ -1,5 +1,8 @@
 <h1>Sign Up</h1>
 
+<%= link_to "Authenticate with Google", "/auth/google_oauth2", id: "sign_in" %>
+<br><br>-OR-<br><br>
+Sign Up with email<br><br>
 <%= render(
   partial: 'users/partials/forms/sign_up',
   locals: {

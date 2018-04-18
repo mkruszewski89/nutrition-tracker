@@ -16,6 +16,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def omniauth
+    @user = User.from_omniauth(request.env["omniauth.auth"])
+    @user.create_slug
+    session[:user_id] = @user.id
+    redirect_to("/#{@user.slug}/account")
+  end
+
   def log_in
   end
 

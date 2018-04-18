@@ -8,6 +8,10 @@ class UserAuthorizer < ApplicationAuthorizer
     authorize(anyone)
   end
 
+  def omniauth?
+    authorize(anyone)
+  end
+
   def log_in?
     authorize(anyone)
   end
@@ -17,6 +21,10 @@ class UserAuthorizer < ApplicationAuthorizer
   end
 
   def account?
+    authorize(owner_or_admin)
+  end
+
+  def edit_account?
     authorize(owner_or_admin)
   end
 

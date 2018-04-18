@@ -7,7 +7,7 @@ locals: {
 }) %>
 
 <br><br><%= link_to("Edit Account", "/#{@user.slug}/account/edit", method: :get) %>
-<br><%= link_to("Log Out", "/log-out", method: :post) %>
+<br><%= link_to("Log Out", "/#{@user.slug}/log-out", method: :post) %>
 <br><br>
 
 <% data = collect_account_information_for_table_display(@user) %>
