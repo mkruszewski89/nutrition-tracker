@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :find_or_new_user
+  before_action :authorize
 
   def sign_up
   end
@@ -98,6 +99,10 @@ class UsersController < ApplicationController
     else
       @user = User.new
     end
+  end
+
+  def authorize
+    UserAuthorizer.new(user: current_user, record: @user).send("#{action_name}?")
   end
 
 end

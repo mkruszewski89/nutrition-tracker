@@ -23,6 +23,6 @@ dynamic serving size coming soon!
 <%= link_to("Ingredients", "/#{recipe.slug}/ingredients", method: :get) %>
 <%= link_to("Instructions", "/#{recipe.slug}/instructions", method: :get) %>
 <%= link_to("Nutrition", "/#{recipe.slug}/nutrition", method: :get) %>
-<% if recipe.user == current_user || current_user.admin? %>
+<% if current_user && (recipe.user == current_user || current_user.admin?) %>
   <%= link_to("Edit", "/#{recipe.slug}/edit-full", method: :get) %>
 <% end %>

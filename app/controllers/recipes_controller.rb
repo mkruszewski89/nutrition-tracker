@@ -1,6 +1,7 @@
 class RecipesController < ApplicationController
   before_action :find_or_new_recipe
   before_action :set_current_user
+  before_action :authorize
 
   def all_recipes
     @recipes = Recipe.all
@@ -89,6 +90,10 @@ class RecipesController < ApplicationController
 
   def set_current_user
     @user = current_user
+  end
+
+  def authorize
+    RecipeAuthorizer.new(user: current_user, record: @recipe).send("#{action_name}?")
   end
 
 end
