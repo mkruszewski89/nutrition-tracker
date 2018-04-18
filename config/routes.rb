@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   post '/sign-up', to: 'users#create_account', as: nil
   get '/log-in', to: 'users#log_in', as: nil
   post '/log-in', to: 'users#authenticate', as: nil
+  post '/log-out', to: 'users#log_out', as: nil
 
   scope '/recipes' do
     get '/all', to: 'recipes#all_recipes', as: nil
@@ -27,6 +28,8 @@ Rails.application.routes.draw do
     get '/food-log', to: 'users#food_log', as: nil
     get '/account', to: 'users#account', as: nil
     get '/account/edit', to: 'users#edit_account', as: nil
+    patch '/account/edit', to: 'users#update_account', as: nil
+    delete '/account/edit', to: 'users#destroy', as: nil
     get '/my-recipes', to: 'users#my_recipes', as: nil
     get '/favorite-recipes', to: 'users#favorite_recipes', as: nil
   end

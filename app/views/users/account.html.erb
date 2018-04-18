@@ -6,6 +6,8 @@ locals: {
   user: current_user
 }) %>
 
+<br><br><%= link_to("Edit Account", "/#{@user.slug}/account/edit", method: :get) %>
+<br><%= link_to("Log Out", "/log-out", method: :post) %>
 <br><br>
 
 <% data = collect_account_information_for_table_display(@user) %>
@@ -14,7 +16,3 @@ partial: 'application/partials/table_view_generator/table',
 locals: {
   data: data
 }) %>
-
-<br>
-
-<%= link_to("Edit Account", "/#{@user.slug}/account/edit", method: :get) %>

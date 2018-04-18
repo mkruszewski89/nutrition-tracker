@@ -1,0 +1,40 @@
+<%= render(
+partial: 'application/partials/form_generator/for',
+locals: {
+  model: model,
+  url: url,
+  method: method,
+  data: {
+    section_1: {
+      for: model,
+      label: nil,
+      headers: nil,
+      section_data: [
+        [
+          ['th', 'form_builder.label(:name)'],
+          ['td', 'form_builder.text_field(:name)']
+        ],
+        [
+          ['th', 'form_builder.label(:email)'],
+          ['td', 'form_builder.email_field(:email)']
+        ],
+        [
+          ['th', 'form_builder.label(:birthday)'],
+          ['td', 'form_builder.date_field(:birthday)']
+        ],
+        [
+          ['th', 'form_builder.label(:gender)'],
+          ['td', 'form_builder.select(:gender, ["male", "female"], {selected: form_builder.object.gender})']
+        ],
+        [
+          ['th', 'form_builder.label("New or Existing Password")'],
+          ['td', 'form_builder.password_field(:password)']
+        ],
+        [
+          ['th', "form_builder.label('Confirm Password')"],
+          ['td', 'form_builder.password_field(:password_confirmation)']
+        ]
+      ]
+    }
+  }
+}) %>
