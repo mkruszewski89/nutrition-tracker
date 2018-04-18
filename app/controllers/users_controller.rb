@@ -1,11 +1,10 @@
 class UsersController < ApplicationController
+  before_action :find_or_new_user
 
   def sign_up
-    @user = User.new
   end
 
   def create_account
-    @user = User.new(user_params)
     @user.nutrition_plan = NutritionPlan.all[0]
     if @user.save
       @user.create_slug
@@ -17,7 +16,6 @@ class UsersController < ApplicationController
   end
 
   def log_in
-    @user = User.new
   end
 
   def authenticate
@@ -37,16 +35,14 @@ class UsersController < ApplicationController
   end
 
   def account
-    @user = User.find_by(slug: params[:user_slug])
   end
 
   def edit_account
-    @user = User.find_by(slug: params[:user_slug])
   end
 
   def update_account
-    @user = User.find_by(slug: params[:user_slug])
     if @user.update(user_params)
+      @user.create_slug
       redirect_to("/#{@user.slug}/account")
     else
       render :edit_account
@@ -54,23 +50,18 @@ class UsersController < ApplicationController
   end
 
   def my_recipes
-    @user = User.find_by(slug: params[:user_slug])
   end
 
   def favorite_recipes
-    @user = User.find_by(slug: params[:user_slug])
   end
 
   def progress
-    @user = User.find_by(slug: params[:user_slug])
   end
 
   def targets
-    @user = User.find_by(slug: params[:user_slug])
   end
 
   def food_log
-    @user = User.find_by(slug: params[:user_slug])
   end
 
   def log_out
@@ -79,7 +70,6 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find_by(slug: params[:user_slug])
     session.delete :user_id if session[:user_id] == @user.id
     @user.destroy
     redirect_to("/log-in")
@@ -98,6 +88,16 @@ class UsersController < ApplicationController
       :nutrition_plan,
       :password,
       :password_confirmation)
+  end
+
+  def find_or_new_user
+    if params[:user_slug] && User.find_by(slug: params[:user_slug])
+      @user = User.find_by(slug: params[:user_slug])
+    elsif params[:user]
+      @user = User.new(user_params)
+    else
+      @user = User.new
+    end
   end
 
 end
