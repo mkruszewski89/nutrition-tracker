@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
   root 'recipes#all_recipes'
 
+  #native authentication routes
   get '/sign-up', to: 'users#sign_up', as: nil
   post '/sign-up', to: 'users#create_account', as: nil
   get '/log-in', to: 'users#log_in', as: nil
   post '/log-in', to: 'users#authenticate', as: nil
 
+  #google oauth authentication routes
   get '/auth/:provider/callback', to: 'users#omniauth'
   get '/auth/failure', to: redirect('/log-in')
 
@@ -37,6 +39,7 @@ Rails.application.routes.draw do
     post '/log-out', to: 'users#log_out', as: nil
   end
 
+  #linking routes
   post '/:user_slug/:recipe_slug/favorites', to: 'recipes#toggle_favorite', as: nil
   post '/:user_slug/:recipe_slug/food-log', to: 'recipes#create_food_log', as: nil
   delete '/:food_log_id/food-log', to: 'recipes#destroy_food_log', as: nil
