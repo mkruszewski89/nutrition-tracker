@@ -10,31 +10,26 @@ locals: {
 
 Current Plan: <%= @user.nutrition_plan.name %><br><%= @user.nutrition_plan.description %>
 
-<br><br>
-
-<% headers = ["Macronutrients"] %>
+<h3>Macronutrients</h3>
 <% data = collect_user_nutrition_plan_targets_for_table_display(@user, 'macronutrient') %>
 <%= render(
 partial: 'application/partials/table_view_generator/table',
 locals: {
-  headers: headers,
   data: data
 }) %>
 
-<% headers = ["Vitamins"] %>
+<h3>Vitamins</h3>
 <% data = collect_user_nutrition_plan_targets_for_table_display(@user, 'vitamin') %>
 <%= render(
 partial: 'application/partials/table_view_generator/table',
 locals: {
-  headers: headers,
   data: data
 }) %>
 
-<% headers = ["Minerals"] %>
+<h3>Minerals</h3>
 <% data = collect_user_nutrition_plan_targets_for_table_display(@user, 'mineral') %>
 <%= render(
 partial: 'application/partials/table_view_generator/table',
 locals: {
-  headers: headers,
   data: data
 }) %>

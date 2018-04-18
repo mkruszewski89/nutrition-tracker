@@ -1,12 +1,4 @@
 <table>
-
-  <% if headers %>
-  <tr>
-    <%= render(partial: 'application/partials/table_view_generator/headers',
-      collection: headers, as: :header) %>
-  </tr>
-  <% end %>
-
   <tr>
     <%= render(partial: 'application/partials/table_view_generator/data',
       collection: data, as: :datum) %>

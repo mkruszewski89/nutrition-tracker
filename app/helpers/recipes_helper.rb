@@ -2,7 +2,7 @@ module RecipesHelper
 
   def collect_recipe_nutrients_for_table_display(recipe, nutrient_type)
     data = []
-    nutrients = Nutrient.all.collect{|nutrient| [["raw single", nutrient.name], ["raw single", nutrient.usda_unit], nutrient] if nutrient.nutrient_type == nutrient_type}.compact
+    nutrients = Nutrient.all.collect{|nutrient| [["header", nutrient.name], ["raw single", nutrient.usda_unit], nutrient] if nutrient.nutrient_type == nutrient_type}.compact
     nutrients.each {|nutrient|
       recipe_nutrient = recipe.recipe_nutrients.find_by(nutrient: nutrient[2])
       data << nutrient[0]
@@ -16,6 +16,10 @@ module RecipesHelper
   def collect_recipe_ingredients_for_table_display(recipe)
     data = []
     if recipe.recipe_ingredients[0]
+      data << ['header', 'Amount']
+      data << ['header', 'Unit']
+      data << ['header', 'Ingredient']
+      data << ['new_row']
       recipe.recipe_ingredients.each {|recipe_ingredient|
         data << ["raw single", recipe_ingredient.amount_in_recipe]
         data << ["raw single", recipe_ingredient.user_defined_unit]

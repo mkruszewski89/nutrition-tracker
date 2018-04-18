@@ -1,4 +1,6 @@
 <%= link_to("All", recipes_all_path) %>
-<%= link_to("Favorites", user_recipes_favorites_path(user)) %>
-<%= link_to("My", user_recipes_all_path(user)) %>
-<%= link_to("New", recipe_new_full_path) %>
+<% if current_user %>
+  <%= link_to("Favorites", user_recipes_favorites_path(user)) %>
+  <%= link_to("My", user_recipes_all_path(user)) %>
+  <%= link_to("New", recipe_new_full_path) %>
+<% end %>

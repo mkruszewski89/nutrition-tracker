@@ -1,7 +1,9 @@
 module ApplicationHelper
 
   def current_user
-    User.all[0]
+    if session[:user_id]
+      User.find(session[:user_id])
+    end
   end
 
 end

@@ -8,11 +8,9 @@ locals: {
 
 <br><br>
 
-<% headers = nil %>
-<% data = collect_food_logs_for_table_display(@user) %>
+<% data = collect_user_food_logs_for_table_display(@user) %>
 <%= render(
 partial: 'application/partials/table_view_generator/table',
 locals: {
-  headers: headers,
   data: data
 }) %>

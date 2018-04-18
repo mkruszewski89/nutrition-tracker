@@ -8,11 +8,9 @@ locals: {
 
 <br><br>Search coming soon<br><br>
 
-<% headers = nil %>
 <% data = collect_recipes_for_table_display(@recipes) %>
 <%= render(
 partial: 'application/partials/table_view_generator/table',
 locals: {
-  headers: headers,
   data: data
 }) %>

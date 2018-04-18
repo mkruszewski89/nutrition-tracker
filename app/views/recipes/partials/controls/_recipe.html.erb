@@ -1,20 +1,24 @@
 <h1><%= recipe.name %></h1>
-dynamic serving size coming soon!<br><br>
-
-<%= link_to("Add to Log", create_food_log_recipe_path(user, recipe), method: :post) %>
-<br>
-last logged:
-<% if user.food_logs.find_by(user: user, recipe: recipe) %>
-  <%= user.food_logs.find_by(user: user, recipe: recipe).date.strftime("%m/%d/%Y") %>
-<% else %>
-  never!
-<% end %>
+dynamic serving size coming soon!
 <br><br>
-<% if Favorite.all.find_by(recipe: recipe, user: user) %>
-  <%= link_to("Remove from Favorites", toggle_favorites_recipe_path(user, recipe), method: :post) %>
-<% else %>
-  <%= link_to("Add to Favorites", toggle_favorites_recipe_path(user, recipe), method: :post) %>
+
+<% if current_user %>
+  <%= link_to("Add to Log", create_food_log_recipe_path(user, recipe), method: :post) %>
+  <br>
+  last logged:
+  <% if user.food_logs.find_by(user: user, recipe: recipe) %>
+    <%= user.food_logs.find_by(user: user, recipe: recipe).date.strftime("%m/%d/%Y") %>
+  <% else %>
+    never!
+  <% end %>
+  <br><br>
+  <% if Favorite.all.find_by(recipe: recipe, user: user) %>
+    <%= link_to("Remove from Favorites", toggle_favorites_recipe_path(user, recipe), method: :post) %>
+  <% else %>
+    <%= link_to("Add to Favorites", toggle_favorites_recipe_path(user, recipe), method: :post) %>
+  <% end %>
 <% end %>
+
 <br><br>
 <%= link_to("Ingredients", recipe_ingredients_path(recipe)) %>
 <%= link_to("Instructions", recipe_instructions_path(recipe)) %>

@@ -1,4 +1,6 @@
 <% case datum[0] %>
+<% when "header" %>
+  <th><%= datum[1] %></th>
 <% when "raw multiple start" %>
   <td><%= datum[1] %>
 <% when "raw multiple continue" %>

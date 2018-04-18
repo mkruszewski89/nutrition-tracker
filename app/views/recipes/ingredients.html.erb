@@ -8,11 +8,9 @@ locals: {
 <h2>Ingredients</h2>
 dynamic units coming soon!<br><br>
 
-<% headers = ["Amount", "Unit", "Ingredients"] %>
 <% data = collect_recipe_ingredients_for_table_display(@recipe) %>
 <%= render(
 partial: 'application/partials/table_view_generator/table',
 locals: {
-  headers: headers,
   data: data
 }) %>

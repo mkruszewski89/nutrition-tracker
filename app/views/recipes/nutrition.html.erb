@@ -7,29 +7,26 @@ locals: {
 
 <h2>Nutrition</h2>
 
-<% headers = ["Macronutrients"] %>
+<h3>Macronutrients</h3>
 <% data = collect_recipe_nutrients_for_table_display(@recipe, 'macronutrient') %>
 <%= render(
 partial: 'application/partials/table_view_generator/table',
 locals: {
-  headers: headers,
   data: data
 }) %>
 
-<% headers = ["Vitamins"] %>
+<h3>Vitamins</h3>
 <% data = collect_recipe_nutrients_for_table_display(@recipe, 'vitamin') %>
 <%= render(
 partial: 'application/partials/table_view_generator/table',
 locals: {
-  headers: headers,
   data: data
 }) %>
 
-<% headers = ["Minerals"] %>
+<h3>Minerals</h3>
 <% data = collect_recipe_nutrients_for_table_display(@recipe, 'mineral') %>
 <%= render(
 partial: 'application/partials/table_view_generator/table',
 locals: {
-  headers: headers,
   data: data
 }) %>

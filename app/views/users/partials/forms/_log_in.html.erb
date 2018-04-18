@@ -1,0 +1,24 @@
+<%= render(
+partial: 'application/partials/form_generator/for',
+locals: {
+  model: model,
+  url: url,
+  method: method,
+  data: {
+    section_1: {
+      for: model,
+      label: nil,
+      headers: nil,
+      section_data: [
+        [
+          ['th', 'form_builder.label(:email)'],
+          ['td', 'form_builder.email_field(:email)']
+        ],
+        [
+          ['th', 'form_builder.label(:password)'],
+          ['td', 'form_builder.password_field(:password)']
+        ]
+      ]
+    }
+  }
+}) %>

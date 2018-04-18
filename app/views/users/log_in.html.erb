@@ -1,0 +1,12 @@
+<h1>Log In</h1>
+
+<%= render(
+  partial: 'users/partials/forms/log_in',
+  locals: {
+    model: @user,
+    url: user_authenticate_path(@user),
+    method: :post
+}) %>
+<br><br>
+Don't have an account?
+<%= link_to("Sign Up", user_sign_up_path(@user)) %>

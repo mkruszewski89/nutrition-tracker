@@ -5,3 +5,16 @@ partial: 'users/partials/controls/user',
 locals: {
   user: current_user
 }) %>
+
+<br><br>
+
+<% data = collect_account_information_for_table_display(@user) %>
+<%= render(
+partial: 'application/partials/table_view_generator/table',
+locals: {
+  data: data
+}) %>
+
+<br>
+
+<%= link_to("Edit Account", edit_user_account_path(@user)) %>

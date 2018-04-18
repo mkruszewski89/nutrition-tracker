@@ -18,7 +18,7 @@
       <% if current_user %>
         <%= link_to("Stats", user_progress_path(current_user)) %>
       <% else %>
-        <%= link_to("Log In", users_authentication_path) %>
+        <%= link_to("Log In", user_log_in_path) %>
       <% end %>
     </nav>
   </head>

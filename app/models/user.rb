@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  validates_with UserValidator
   belongs_to :nutrition_plan
   has_many :recipes, dependent: :destroy
   has_many :favorites, dependent: :destroy

@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   root 'recipes#all_recipes'
 
+  get '/sign-up', to: 'users#sign_up', as: 'user_sign_up'
+  post '/sign-up', to: 'users#create_account', as: "create_user_account"
+  get '/log-in', to: 'users#log_in', as: 'user_log_in'
+  post '/log-in', to: 'users#authenticate', as: 'user_authenticate'
+
   scope '/recipes' do
     get '/all', to: 'recipes#all_recipes', as: 'recipes_all'
     get '/new', to: 'recipes#new_full', as: 'recipe_new_full'
@@ -14,10 +19,6 @@ Rails.application.routes.draw do
     get '/edit', to: 'recipes#edit_full', as: 'edit_recipe_full'
     patch '/edit', to: 'recipes#update_full', as: 'update_recipe_full'
     delete '/edit', to: 'recipes#destroy_full', as: 'destroy_recipe_full'
-  end
-
-  scope '/users' do
-    get '/authentication', to: 'users#authenticate', as: 'users_authentication'
   end
 
   scope '/:user_id' do
