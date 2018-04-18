@@ -17,4 +17,4 @@ locals: {
 
 <br>
 
-<%= link_to("Edit Account", edit_user_account_path(@user)) %>
+<%= link_to("Edit Account", "/#{@user.slug}/account/edit", method: :get) %>

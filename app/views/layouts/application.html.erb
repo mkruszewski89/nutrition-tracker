@@ -14,11 +14,11 @@
     </datalist>
 
     <nav>
-      <%= link_to("Recipes", recipes_all_path) %>
+      <%= link_to("Recipes", "/recipes/all", method: :get) %>
       <% if current_user %>
-        <%= link_to("Stats", user_progress_path(current_user)) %>
+        <%= link_to("Stats", "/#{current_user.slug}/progress", method: :get) %>
       <% else %>
-        <%= link_to("Log In", user_log_in_path) %>
+        <%= link_to("Log In", "/log-in", method: :get) %>
       <% end %>
     </nav>
   </head>

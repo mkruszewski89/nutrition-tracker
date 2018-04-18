@@ -1,6 +1,6 @@
-<%= link_to("All", recipes_all_path) %>
+<%= link_to("All", "/recipes/all", method: :get) %>
 <% if current_user %>
-  <%= link_to("Favorites", user_recipes_favorites_path(user)) %>
-  <%= link_to("My", user_recipes_all_path(user)) %>
-  <%= link_to("New", recipe_new_full_path) %>
+  <%= link_to("Favorites", "/#{user.slug}/favorite-recipes", method: :get) %>
+  <%= link_to("My", "/#{user.slug}/my-recipes", method: :get) %>
+  <%= link_to("New", "/recipes/new-full", method: :get) %>
 <% end %>

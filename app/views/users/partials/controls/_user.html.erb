@@ -1,4 +1,4 @@
-<%= link_to("Progress", user_progress_path(user)) %>
-<%= link_to("Targets", user_targets_path(user)) %>
-<%= link_to("Log", user_food_log_path(user)) %>
-<%= link_to("Account", user_account_path(user)) %>
+<%= link_to("Progress", "/#{user.slug}/progress", method: :get) %>
+<%= link_to("Targets", "/#{user.slug}/targets", method: :get) %>
+<%= link_to("Log", "/#{user.slug}/food-log", method: :get) %>
+<%= link_to("Account", "/#{user.slug}/account", method: :get) %>

@@ -13,7 +13,8 @@ class RecipesController < ApplicationController
     @user.recipes << @recipe
     if @recipe.save
       @recipe.build_recipe_nutrients
-      redirect_to recipe_ingredients_path(@recipe)
+      @recipe.create_slug
+      redirect_to("/#{@recipe.slug}/ingredients")
     else
       render :new_full
     end
@@ -34,7 +35,8 @@ class RecipesController < ApplicationController
   def update_full
     if @recipe.update(recipe_params)
       @recipe.build_recipe_nutrients
-      redirect_to recipe_ingredients_path(@recipe)
+      @recipe.create_slug
+      redirect_to("/#{@recipe.slug}/ingredients")
     else
       render :new_full
     end
@@ -43,7 +45,7 @@ class RecipesController < ApplicationController
   def destroy_full
     @user = @recipe.user
     @recipe.destroy
-    redirect_to user_recipes_all_path(@user)
+    redirect_to("/#{@user.slug}/my-recipes")
   end
 
   def toggle_favorite
@@ -66,6 +68,7 @@ class RecipesController < ApplicationController
   def recipe_params
     params.require(:recipe).permit(
       :name,
+      :slug,
       recipe_ingredients_attributes: [
         :amount_in_recipe,
         :ingredient_name,
@@ -75,8 +78,8 @@ class RecipesController < ApplicationController
   end
 
   def find_or_new_recipe
-    if params[:recipe_id] && Recipe.exists?(params[:recipe_id])
-      @recipe = Recipe.find(params[:recipe_id])
+    if params[:recipe_slug] && Recipe.find_by(slug: params[:recipe_slug])
+      @recipe = Recipe.find_by(slug: params[:recipe_slug])
     elsif params[:recipe]
       @recipe = Recipe.new(recipe_params)
     else

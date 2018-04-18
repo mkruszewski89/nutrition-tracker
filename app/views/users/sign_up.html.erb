@@ -4,9 +4,9 @@
   partial: 'users/partials/forms/sign_up',
   locals: {
     model: @user,
-    url: create_user_account_path(@user),
+    url: '/sign-up',
     method: :post
 }) %>
 <br><br>
 Already have an account?
-<%= link_to("Log In", user_log_in_path(@user)) %>
+<%= link_to("Log In", "/log-in", method: :get) %>

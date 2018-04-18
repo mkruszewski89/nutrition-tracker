@@ -32,11 +32,6 @@ class User < ApplicationRecord
     nutrition_plan.unpack_data[user_attributes.join(";")]
   end
 
-  def age
-    now = Time.now.utc.to_date
-    age = now.year - birthday.year - ((now.month > birthday.month || (now.month == birthday.month && now.day >= birthday.day)) ? 0 : 1)
-  end
-
   def age_bracket
     case age
     when 0..3
@@ -54,6 +49,11 @@ class User < ApplicationRecord
     else
       "51..200"
     end
+  end
+
+  def age
+    now = Time.now.utc.to_date
+    age = now.year - birthday.year - ((now.month > birthday.month || (now.month == birthday.month && now.day >= birthday.day)) ? 0 : 1)
   end
 
 end

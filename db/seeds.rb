@@ -66,6 +66,7 @@ NutritionPlan.create(
 
 #users
 site_admin = User.create(name: "Site Administrator", email: "admin@nutritiontracker.com", password: 'p@ssw0rd', role: 1, birthday: DateTime.new(1989, 6, 22), gender: 'male', nutrition_plan: NutritionPlan.all[0])
+site_admin.create_slug
 
 #ingredients
 ingredient = Ingredient.find_or_create_by_upc('077901421425')
@@ -152,6 +153,7 @@ recipe.recipe_ingredients.build(
 )
 recipe.save
 recipe.build_recipe_nutrients
+recipe.create_slug
 
 recipe = Recipe.new(name: "Mass Cookie", user: site_admin)
 recipe.recipe_ingredients.build(
@@ -206,6 +208,7 @@ recipe.recipe_ingredients.build(
 )
 recipe.save
 recipe.build_recipe_nutrients
+recipe.create_slug
 
 recipe = Recipe.new(name: "Volume Cookie", user: site_admin)
 recipe.recipe_ingredients.build(
@@ -260,3 +263,4 @@ recipe.recipe_ingredients.build(
 )
 recipe.save
 recipe.build_recipe_nutrients
+recipe.create_slug

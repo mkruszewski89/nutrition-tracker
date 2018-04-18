@@ -1,38 +1,38 @@
 Rails.application.routes.draw do
   root 'recipes#all_recipes'
 
-  get '/sign-up', to: 'users#sign_up', as: 'user_sign_up'
-  post '/sign-up', to: 'users#create_account', as: "create_user_account"
-  get '/log-in', to: 'users#log_in', as: 'user_log_in'
-  post '/log-in', to: 'users#authenticate', as: 'user_authenticate'
+  get '/sign-up', to: 'users#sign_up', as: nil
+  post '/sign-up', to: 'users#create_account', as: nil
+  get '/log-in', to: 'users#log_in', as: nil
+  post '/log-in', to: 'users#authenticate', as: nil
 
   scope '/recipes' do
-    get '/all', to: 'recipes#all_recipes', as: 'recipes_all'
-    get '/new', to: 'recipes#new_full', as: 'recipe_new_full'
-    post '/new', to: 'recipes#create_full', as: 'create_recipe_full'
+    get '/all', to: 'recipes#all_recipes', as: nil
+    get '/new-full', to: 'recipes#new_full', as: nil
+    post '/new-full', to: 'recipes#create_full', as: nil
   end
 
-  scope '/:recipe_id' do
-    get '/ingredients', to: 'recipes#ingredients', as: 'recipe_ingredients'
-    get '/instructions', to: 'recipes#instructions', as: 'recipe_instructions'
-    get '/nutrition', to: 'recipes#nutrition', as: 'recipe_nutrition'
-    get '/edit', to: 'recipes#edit_full', as: 'edit_recipe_full'
-    patch '/edit', to: 'recipes#update_full', as: 'update_recipe_full'
-    delete '/edit', to: 'recipes#destroy_full', as: 'destroy_recipe_full'
+  scope '/:recipe_slug' do
+    get '/ingredients', to: 'recipes#ingredients', as: nil
+    get '/instructions', to: 'recipes#instructions', as: nil
+    get '/nutrition', to: 'recipes#nutrition', as: nil
+    get '/edit-full', to: 'recipes#edit_full', as: nil
+    patch '/edit-full', to: 'recipes#update_full', as: nil
+    delete '/edit-full', to: 'recipes#destroy_full', as: nil
   end
 
-  scope '/:user_id' do
-    get '/progress', to: 'users#progress', as: 'user_progress'
-    get '/targets', to: 'users#targets', as: 'user_targets'
-    get '/food-log', to: 'users#food_log', as: 'user_food_log'
-    get '/account', to: 'users#account', as: 'user_account'
-    get '/edit', to: 'users#edit_account', as: 'edit_user_account'
-    get '/my-recipes', to: 'users#my_recipes', as: 'user_recipes_all'
-    get '/favorite-recipes', to: 'users#favorite_recipes', as: 'user_recipes_favorites'
+  scope '/:user_slug' do
+    get '/progress', to: 'users#progress', as: nil
+    get '/targets', to: 'users#targets', as: nil
+    get '/food-log', to: 'users#food_log', as: nil
+    get '/account', to: 'users#account', as: nil
+    get '/account/edit', to: 'users#edit_account', as: nil
+    get '/my-recipes', to: 'users#my_recipes', as: nil
+    get '/favorite-recipes', to: 'users#favorite_recipes', as: nil
   end
 
-  post '/:user_id/:recipe_id/favorites', to: 'recipes#toggle_favorite', as: 'toggle_favorites_recipe'
-  post '/:user_id/:recipe_id/food-log', to: 'recipes#create_food_log', as: 'create_food_log_recipe'
-  delete '/:food_log_id/food-log', to: 'recipes#destroy_food_log', as: 'delete_food_log_recipe'
+  post '/:user_slug/:recipe_slug/favorites', to: 'recipes#toggle_favorite', as: nil
+  post '/:user_slug/:recipe_slug/food-log', to: 'recipes#create_food_log', as: nil
+  delete '/:food_log_id/food-log', to: 'recipes#destroy_food_log', as: nil
 
 end

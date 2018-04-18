@@ -8,8 +8,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.nutrition_plan << NutritionPlan.all[0]
     if @user.save
+      @user.create_slug
       session[:user_id] = @user.id
-      redirect_to user_account_path(@user)
+      redirect_to("/#{@user.slug}/account")
     else
       render :sign_up
     end
@@ -28,7 +29,7 @@ class UsersController < ApplicationController
     end
     if @user.authenticate(params[:user][:password])
       session[:user_id] = @user.id
-      redirect_to(user_account_path(@user))
+      redirect_to("/#{@user.slug}/account")
     else
       @user.errors[:password] << "for #{params[:user][:email]} doesn't match our records"
       render :log_in
@@ -36,31 +37,31 @@ class UsersController < ApplicationController
   end
 
   def account
-    @user = User.find(params[:user_id])
+    @user = User.find_by(slug: params[:user_slug])
   end
 
   def edit_account
-    @user = User.find(params[:user_id])
+    @user = User.find_by(slug: params[:user_slug])
   end
 
   def my_recipes
-    @user = User.find(params[:user_id])
+    @user = User.find_by(slug: params[:user_slug])
   end
 
   def favorite_recipes
-    @user = User.find(params[:user_id])
+    @user = User.find_by(slug: params[:user_slug])
   end
 
   def progress
-    @user = User.find(params[:user_id])
+    @user = User.find_by(slug: params[:user_slug])
   end
 
   def targets
-    @user = User.find(params[:user_id])
+    @user = User.find_by(slug: params[:user_slug])
   end
 
   def food_log
-    @user = User.find(params[:user_id])
+    @user = User.find_by(slug: params[:user_slug])
   end
 
   private
@@ -68,6 +69,7 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(
       :name,
+      :slug,
       :email,
       :birthday,
       :gender,

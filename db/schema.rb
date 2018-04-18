@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180417173552) do
+ActiveRecord::Schema.define(version: 20180418125157) do
 
   create_table "favorites", force: :cascade do |t|
     t.integer "user_id"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 20180417173552) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
   end
 
   create_table "units", force: :cascade do |t|
@@ -99,7 +100,7 @@ ActiveRecord::Schema.define(version: 20180417173552) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
+    t.string "name", default: "New User"
     t.string "email"
     t.string "password_digest"
     t.datetime "birthday"
@@ -108,6 +109,7 @@ ActiveRecord::Schema.define(version: 20180417173552) do
     t.datetime "updated_at", null: false
     t.integer "role", default: 0
     t.integer "nutrition_plan_id"
+    t.string "slug"
   end
 
 end

@@ -3,7 +3,7 @@ dynamic serving size coming soon!
 <br><br>
 
 <% if current_user %>
-  <%= link_to("Add to Log", create_food_log_recipe_path(user, recipe), method: :post) %>
+  <%= link_to("Add to Log", "/#{user.slug}/#{recipe.slug}/food-log", method: :post) %>
   <br>
   last logged:
   <% if user.food_logs.find_by(user: user, recipe: recipe) %>
@@ -13,16 +13,16 @@ dynamic serving size coming soon!
   <% end %>
   <br><br>
   <% if Favorite.all.find_by(recipe: recipe, user: user) %>
-    <%= link_to("Remove from Favorites", toggle_favorites_recipe_path(user, recipe), method: :post) %>
+    <%= link_to("Remove from Favorites", "/#{user.slug}/#{recipe.slug}/favorites", method: :post) %>
   <% else %>
-    <%= link_to("Add to Favorites", toggle_favorites_recipe_path(user, recipe), method: :post) %>
+    <%= link_to("Add to Favorites", "/#{user.slug}/#{recipe.slug}/favorites", method: :post) %>
   <% end %>
 <% end %>
 
 <br><br>
-<%= link_to("Ingredients", recipe_ingredients_path(recipe)) %>
-<%= link_to("Instructions", recipe_instructions_path(recipe)) %>
-<%= link_to("Nutrition", recipe_nutrition_path(recipe)) %>
+<%= link_to("Ingredients", "/#{recipe.slug}/ingredients", method: :get) %>
+<%= link_to("Instructions", "/#{recipe.slug}/instructions", method: :get) %>
+<%= link_to("Nutrition", "/#{recipe.slug}/nutrition", method: :get) %>
 <% if user == current_user || current_user.admin? %>
-  <%= link_to("Edit", edit_recipe_full_path(recipe)) %>
+  <%= link_to("Edit", "/#{recipe.slug}/edit-full", method: :get) %>
 <% end %>
