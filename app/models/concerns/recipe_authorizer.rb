@@ -37,15 +37,15 @@ class RecipeAuthorizer < ApplicationAuthorizer
   end
 
   def toggle_favorite?
-    authorize(owner_or_admin)
+    authorize(any_user)
   end
 
   def create_food_log?
-    authorize(owner_or_admin)
+    authorize(any_user)
   end
 
   def destroy_food_log?
-    authorize(owner_or_admin)
+    authorize(any_user)
   end
 
 end

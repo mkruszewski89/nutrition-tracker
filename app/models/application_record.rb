@@ -3,7 +3,7 @@ class ApplicationRecord < ActiveRecord::Base
 
   def create_slug
     if self.class.where("name = ?", self.name).length > 1
-      last_slug = self.class.where("name = ?", self.name).last.slug
+      last_slug = self.class.where("name = ?", self.name)[-2].slug
       increment = last_slug[last_slug.rindex("-") + 1..last_slug.length].to_i + 1
       self.slug = "#{name.gsub(" ","-")}-#{increment}"
     else
