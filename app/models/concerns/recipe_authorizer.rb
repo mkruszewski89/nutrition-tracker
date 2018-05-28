@@ -48,4 +48,8 @@ class RecipeAuthorizer < ApplicationAuthorizer
     authorize(any_user)
   end
 
+  def most_calories?
+    authorize(anyone)
+  end
+
 end

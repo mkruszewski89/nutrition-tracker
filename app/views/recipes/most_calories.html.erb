@@ -1,0 +1,16 @@
+<%= render(
+partial: 'recipes/partials/controls/recipe',
+locals: {
+  recipe: @recipe,
+  user: @user
+}) %>
+
+<h2>Ingredients</h2>
+dynamic units coming soon!<br><br>
+
+<% data = collect_recipe_ingredients_for_table_display(@recipe) %>
+<%= render(
+partial: 'application/partials/table_view_generator/table',
+locals: {
+  data: data
+}) %>

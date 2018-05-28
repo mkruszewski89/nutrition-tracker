@@ -81,6 +81,17 @@ class Recipe < ApplicationRecord
     end
 
   # Other
+    def self.most_calories
+      most_calories = 0
+      recipe_with_most_calories = nil
+      self.all.each {|recipe|
+        if recipe.nutrient_amount('calorie') > most_calories
+          recipe_with_most_calories = recipe
+          most_calories = recipe.nutrient_amount('calorie')
+        end
+      }
+      return recipe_with_most_calories
+    end
 
     def nutrient_amount(nutrient)
       recipe_nutrients.find_by(nutrient: Nutrient.find_by(name: nutrient)).amount_in_recipe

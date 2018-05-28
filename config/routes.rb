@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   scope '/recipes' do
     get '/all', to: 'recipes#all_recipes', as: nil
     get '/new-full', to: 'recipes#new_full', as: nil
+    get '/most-calories', to: 'recipes#most_calories', as: nil
     post '/new-full', to: 'recipes#create_full', as: nil
   end
 

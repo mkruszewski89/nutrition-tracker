@@ -64,6 +64,10 @@ class RecipesController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
+  def most_calories
+    @recipe = Recipe.most_calories
+  end
+
   private
 
   def recipe_params
